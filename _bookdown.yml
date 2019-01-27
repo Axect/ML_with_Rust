@@ -1,5 +1,5 @@
-book_filename: "bookdown-demo"
+book_filename: "ML_with_Rust"
 language:
   ui:
-    chapter_name: "Chapter "
+    chapter_name: "Chap "
 delete_merged_file: true
