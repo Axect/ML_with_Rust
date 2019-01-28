@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 3 Measure Theory | Machine Learning with Rust</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 3 Measure Theory | Machine Learning with Rust" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="axect/ML_with_Rust" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Measure Theory | Machine Learning with Rust" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Tae Geun Kim">
+
+
+<meta name="date" content="2019-01-28">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="intro.html">
+<link rel="next" href="methods.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Machine Learning with Rust</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="measure.html"><a href="measure.html"><i class="fa fa-check"></i><b>3</b> Measure Theory</a><ul>
+<li class="chapter" data-level="3.1" data-path="measure.html"><a href="measure.html#sigma"><i class="fa fa-check"></i><b>3.1</b> <span class="math inline">\(\sigma\)</span>-algebra</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
+<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
+<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
+<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning with Rust</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="measure" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Measure Theory</h1>
+<p>측도론이란, 간단히 말하면 집합의 크기를 측정하기 위한 학문입니다.
+특히, 함수공간과 확률공간 같이 추상적인 공간을 다룰 때에 중요한 학문이죠.</p>
+<p>우리는 흔히 고등학교 과정에서 확률과 통계를 접하고는 확률을 다룰 수 있다라고 착각합니다.
+예를 들어, 확률이란 무엇인가? 라는 질문에 대해서 보통 다음과 같은 정의를 인용할 것입니다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Example 1 - High School Probability</strong></td>
+</tr>
+<tr class="even">
+<td align="left">Probability of occurrence of events <span class="math inline">\(A\)</span> in sample space <span class="math inline">\(\Omega\)</span> is
+<span class="math display">\[ \mathbf{P}(A) = \frac{n(A)}{n(\Omega)}\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>위의 정의를 이용하면 아주 간단명료하게 수학적 확률을 계산할 수 있습니다.
+예를 들어, 주사위를 던졌을 때, 1이 나올 확률은 <span class="math inline">\(\left\{1,2,3,4,5,6 \right\}\)</span>을
+전체집합으로 설정하면 전체 6개 중에 1이 발생할 사건은 1개이기에 확률은 <span class="math inline">\(\frac{1}{6}\)</span>이 됩니다.
+하지만, 다음의 경우에는 난처해집니다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Example 2 - Common High School Problem</strong></td>
+</tr>
+<tr class="even">
+<td align="left">정사각형 과녁 안에 원 모양 과녁이 네 변에 모두 내접하여 있을 때, 화살이 원 안에 명중할
+확률을 구하여라.</td>
+</tr>
+</tbody>
+</table>
+<p>간단한 확률 지식이 있는 사람이라면 이 문제를 <span class="math inline">\(\frac{\text{원의 넓이}}{\text{전체 정사각형의 넓이}}\)</span>로 접근하여
+<span class="math inline">\(\frac{\pi}{4}\)</span>임을 알아낼 수 있을 것입니다. 그런데 이는 앞에서의 정의와 대치됩니다.
+분명 우리가 배운 정의에 의하면 사건이 발생할 경우의 수를 전체 경우의 수로 나누어 구해야 하는데,
+전체 경우의 수는 얼마일까요? 하다 못해 원의 경우의 수는 어떻게 접근해야 할까요?
+우리는 지금까지 아무런 의심 없이 구해왔습니다만, 이제부터 의심을 가질 필요가 있습니다.
+확률은 특정 경우에서는 경우의 수 문제로 치환될 수 있지만, 집합이 무한해지는 순간 우리가 정의한 확률에 부합하지 않게 됩니다.
+따라서 우리는 확률을 보다 엄밀하게 정의해야할 필요가 있습니다. 그리고 그것을 위해서는 먼저 집합의 크기를 정의해야 합니다.
+바로 이를 위해서 측도론이 필요한 것입니다.</p>
+<p>이제 측도론의 필요성은 잘 알았지만, 측도론은 상당히 추상적인 학문이라 곧바로 집합의 크기를 정의내릴 수는 없습니다.
+집합의 크기가 무엇이다 말하기 전에 측정 가능한 집합에 대해서 먼저 논의해봅시다.
+일단, 측정도 모르고 측정 가능성도 모르겠지만 일단 어떤 집합 <span class="math inline">\(U, V\)</span>가 <strong>크기를 잴 수 있는 집합(가측집합; Measurable Set)</strong>이라 전제해봅시다.
+그렇다면 직관적으로 다음의 사실들을 받아 들일 수 있습니다.</p>
+<ul>
+<li><span class="math inline">\(U\cup V\)</span> is measurable</li>
+<li><span class="math inline">\(U \cap V\)</span> is measurable</li>
+<li><span class="math inline">\(U^c,~ V^c\)</span> is measurable</li>
+</ul>
+<p>하지만 수학자들은 이런 모호한 직관으로서의 정의를 좋아하지 않습니다. 이런 규칙들을 모아 좀 더 엄밀한 표현으로 바꾸어 하나의 우아한 규칙으로 정의내리고 받아들입니다.
+수학에서 이러한 규칙을 <strong>대수(Algebra)</strong>라고 부릅니다.</p>
+<div id="sigma" class="section level2">
+<h2><span class="header-section-number">3.1</span> <span class="math inline">\(\sigma\)</span>-algebra</h2>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 1 - <span class="math inline">\(\sigma\)</span>-algebra</strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\(S\)</span> be a set, and let <span class="math inline">\(\mathcal{F}\)</span> be a family of subsets of <span class="math inline">\(S\)</span>.
+<span class="math inline">\(\mathcal{F}\)</span> is called a <span class="math inline">\(\sigma\)</span>-algebra if <br/>
+<br/>
+1. <span class="math inline">\(\emptyset \in \mathcal{F}\)</span> <br/>
+2. <span class="math inline">\(A \in \mathcal{F}\)</span> implies <span class="math inline">\(A^c \in \mathcal{F}\)</span> <br/>
+3. <span class="math inline">\(A_1, A_2,\cdots \in \mathcal{F}\)</span> implies <span class="math inline">\(\bigcup_{i=1}^\infty A_i \in \mathcal{F}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>정의는 무척 복잡해보이지만, 사실 의미 자체는 간단합니다. 대수는 일종의 규칙을 담아 놓은 집합입니다.
+예를 들어, 위상수학에서의 Topology는 모든 열린 집합들의 집합이고, 여기서 말하는 <span class="math inline">\(\sigma\)</span>-algebra(시그마대수)는
+모든 가측집합들의 집합입니다. 정의자체도 하나씩 살펴보면 충분히 납득이 가능합니다.
+공집합은 당연하게도 크기가 0일 것이므로 측정가능한 집합이며, 어떤 집합 <span class="math inline">\(A\)</span>가 측정가능하다면 (이를 수학에서는 <span class="math inline">\(A\in\mathcal{F}\)</span>라 표현합니다.)
+그의 여집합 또한 측정할 수 있을 것입니다. 마지막으로 측정 가능한 집합들의 합집합 또한 측정 가능할 것입니다.
+이 외에도 전체집합이 측정가능하다는 사실을 1번과 2번 정의로부터 이끌어낼 수 있고, 2번과 3번 정의를 이용하면 합집합 뿐만 아니라
+교집합 또한 측정 가능하다는 사실을 유추해낼 수 있습니다.</p>
+<p>이제 대수를 정의하였으니 우리가 다룰 공간을 명시해봅시다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 2 - Measurable Space</strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\(S\)</span> be a set, and let <span class="math inline">\(\mathcal{F}\)</span> be a <span class="math inline">\(\sigma\)</span>-algebra of subsets of <span class="math inline">\(S\)</span>.
+Then <span class="math inline">\((S, \mathcal{F})\)</span> is called a measurable space.
+The elements of <span class="math inline">\(\mathcal{F}\)</span> are called measurable sets.</td>
+</tr>
+</tbody>
+</table>
+<p>이제 기본 틀은 정리했으니 적응하기 위하여 조금 더 생각을 해봅시다. 어떤 집합 <span class="math inline">\(S\)</span>에 대하여
+가장 작은 <span class="math inline">\(\sigma\)</span>-algebra와 가장 큰 <span class="math inline">\(\sigma\)</span>-algebra는 뭘까요?
+일단, 정의에 의해 공집합은 무조건 측정가능하고 두 번째 정의에 의해 전체집합도 측정가능하므로
+가장 작은 시그마대수는 <span class="math inline">\(\mathcal{F} = \left\{\emptyset, S \right\}\)</span>가 됩니다.
+또한 시그마 대수는 어떤 집합의 부분집합의 모임이기 때문에 모든 부분집합의 집합(멱집합; Power set)이
+가장 큰 시그마 대수가 될 것입니다. 이는 <span class="math inline">\(\mathcal{F} = \mathcal{P}(S)\)</span>로 표기합니다.</p>
+<p>고등학교 시절에 부분집합을 배울 때, 어떤 집합을 포함하는 부분집합의 개수는? 이라는 문제를 본 적이
+있을 겁니다. 되게 의미 없는 일 같지만 수학에서는 어떤 집합을 포함하고 있는 지의 여부가 상당히
+중요합니다. 시그마 대수에서도 마찬가지인데 어떤 집합을 반드시 포함하고 있는 시그마 대수를 “그
+집합에 의하여 발생한 시그마 대수이다” 라고 정의할 것입니다. 수학적 정의는 다음과 같습니다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 3 - Generated <span class="math inline">\(\sigma\)</span>-algebra </strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\(S\)</span> be a set and <span class="math inline">\(G\)</span> be a family of subsets of <span class="math inline">\(S\)</span>. The smallest <span class="math inline">\(\sigma\)</span>-algbera
+which contains <span class="math inline">\(G\)</span> is called generated <span class="math inline">\(\sigma\)</span>-algebra with respect to <span class="math inline">\(G\)</span> denoted by
+<span class="math inline">\(\sigma(G)\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>이제 이 정의를 아주 유명한 규칙 공간에 적용해보겠습니다. 바로 위상공간(Topological Space)에 말이죠.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-measure.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["ML_with_Rust.pdf", "ML_with_Rust.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

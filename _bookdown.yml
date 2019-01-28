@@ -1,6 +1,6 @@
 book_filename: "ML_with_Rust"
 language:
   ui:
-    chapter_name: "Chap "
+    chapter_name: "Chapter "
 delete_merged_file: true
 output_dir: "docs"

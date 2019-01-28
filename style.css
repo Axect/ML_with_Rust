@@ -12,3 +12,7 @@ pre {
 pre code {
   white-space: inherit;
 }
+div.box {
+  border-top-style: solid;
+  border-bottom-style: solid;
+}
