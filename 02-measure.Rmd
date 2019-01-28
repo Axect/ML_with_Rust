@@ -239,7 +239,7 @@ then find integral of $f \in \mathbb{R}$.
 
 이 문제는 직사각형의 넓이만 구할 수 있으면 아주 쉽게 구할 수 있습니다.
 
-```{r fig.cap = 'Simple function example', echo=FALSE}
+```{r fig.cap = 'Simple function example', fig.align='center',echo=FALSE}
 x = seq(-1,4,0.01);
 y = function(x) {
     if (x < 0) {
@@ -253,6 +253,6 @@ y = function(x) {
     }
 }
 z = Vectorize(y)
-par(mar = c(4, 4, 0.1, 0.1))
+par(pty="s")
 plot(x, z(x), type='l')
 ```
