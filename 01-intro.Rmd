@@ -1,21 +1,19 @@
 # Introduction {#intro}
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+과학이란, 굉장히 포괄적인 행위라 한 마디로 정의하는 것이 어렵지만, 공통적인 특징으로는 자연을 관측한 결과를 분석하여 정해진 모델로 분류한다는 것이 있습니다. 이를 수학에서의 표현방식을 빌려와서 나타내면 다음과 같습니다.
 
-Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+* Observation: $x\in \mathbb{R}^d$
+* Class(or Category): $y \in \left\{ 1,2,\cdots,M\right\}$
+* Classifier: $g: \mathbb{R}^d \rightarrow \{ 1, 2, \cdots, M\}$
+* Error: Quantity to measure difference between $g(x), ~y$
 
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
-```
+우리의 궁극적인 목적은 관측값을 적절한 모델로 분류하는 분류기인 $g$를 찾는 것입니다. 모든 상황에 통용되는 $g$를 찾을 수 있다면 좋겠지만 안타깝게도 그런 $g$는 존재하지 않습니다. 하나의 관측 값이 항상 하나의 모델에만 대응되는 것도 아닐뿐더러, 관측 상황조차 같지 않기 때문이죠. 따라서 분류기에는 항상 error가 존재합니다. 즉, 우리의 관측은 비결정론적(Undeterministic)이고, 이를 표현하기 위해서는 기존의 데카르트 방식인 결정론적 수학을 넘어서야 합니다. 우리는 이러한 이론을 **확률론**(Probabilistic Theory)이라 부릅니다.
 
-Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+확률론을 적용하기 위하여 변수를 단순히 일차원적으로 보는 것이 아니라 변수와 모델을 엮은 하나의 Pair를 메인 변수로 볼 것입니다. 이렇게 하면 보다 쉽게 Error의 정도를 명시할 수 있습니다.
 
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(iris, 20), caption = 'Here is a nice table!',
-  booktabs = TRUE
-)
-```
+* Random pair: $(X, Y) \in \mathbb{R}^d \times \{1,2,\cdots,M\}$
+* Probability of Error: $L(g) = \mathbf{P}\{g(X) \neq Y\}$
 
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+그리고 이를 활용해 가장 이상적인 분류기를 정의내릴 수 있습니다.
+
+$$g^* = \underset{g:\mathbb{R}^d \rightarrow \{1,2,\cdots,M\}}{\text{argmin}}L(g)$$
