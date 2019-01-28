@@ -69,15 +69,10 @@
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="measure.html"><a href="measure.html"><i class="fa fa-check"></i><b>3</b> Measure Theory</a><ul>
-<li class="chapter" data-level="3.1" data-path="measure.html"><a href="measure.html#sigma"><i class="fa fa-check"></i><b>3.1</b> <span class="math inline">\(\sigma\)</span>-algebra</a></li>
+<li class="chapter" data-level="3" data-path="measuretheory.html"><a href="measuretheory.html"><i class="fa fa-check"></i><b>3</b> Measure Theory</a><ul>
+<li class="chapter" data-level="3.1" data-path="measuretheory.html"><a href="measuretheory.html#sigma"><i class="fa fa-check"></i><b>3.1</b> <span class="math inline">\(\sigma\)</span>-algebra</a></li>
+<li class="chapter" data-level="3.2" data-path="measuretheory.html"><a href="measuretheory.html#measure"><i class="fa fa-check"></i><b>3.2</b> Measure</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
-<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -110,7 +105,8 @@
 학습된 기계들은 바둑이나 게임에서부터 프로들을 가뿐히 눌렀고, 연구나 업무를 훨씬 효율적으로 해결합니다.
 그러나 단순히 모두가 한다고 해서 섣부르게 시작하다가는 결과가 나와도 해석하지 못하거나 혹은 애초에 잘못된 결과가 나올 수도 있습니다.
 따라서 이 책에서는 단순히 Machine Learning Framework를 사용하는 것이 아닌, 밑바닥부터 차근차근 이론을 적용하여 Machine Learning을 학습하고자 합니다.
-그러기 위해서 우리는 Rust라는 프로그래밍 언어와 매우 유명한 Bishop의 교재<span class="citation">(Bishop <a href="#ref-bishop_2006">2006</a>)</span>를 사용할 것입니다.</p>
+그러기 위해서 우리는 Rust라는 프로그래밍 언어와 매우 유명한 Bishop의 교재<span class="citation">(Bishop <a href="#ref-bishop_2006">2006</a>)</span>, 그리고 좀 더 엄밀한 이론을 위하여
+뤽 데브로이의 책<span class="citation">(Devroye <a href="#ref-devroye1996a">1996</a>)</span> 역시 사용할 것입니다.</p>
 <p>그럼 이제 바로 시작해봅시다.</p>
 
 </div>
@@ -118,6 +114,9 @@
 <div id="refs" class="references">
 <div id="ref-bishop_2006">
 <p>Bishop, Christopher M. 2006. <em>Pattern Recognition and Machine Learning</em>. Springer. <a href="https://www.springer.com/kr/book/9780387310732">https://www.springer.com/kr/book/9780387310732</a>.</p>
+</div>
+<div id="ref-devroye1996a">
+<p>Devroye, Luc. 1996. <em>A Probabilistic Theory of Pattern Recognition</em>. New York: Springer. <a href="https://www.springer.com/us/book/9780387946184">https://www.springer.com/us/book/9780387946184</a>.</p>
 </div>
 </div>
             </section>

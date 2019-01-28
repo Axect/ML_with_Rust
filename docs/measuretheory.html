@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="intro.html">
-<link rel="next" href="methods.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -69,15 +69,10 @@
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="measure.html"><a href="measure.html"><i class="fa fa-check"></i><b>3</b> Measure Theory</a><ul>
-<li class="chapter" data-level="3.1" data-path="measure.html"><a href="measure.html#sigma"><i class="fa fa-check"></i><b>3.1</b> <span class="math inline">\(\sigma\)</span>-algebra</a></li>
+<li class="chapter" data-level="3" data-path="measuretheory.html"><a href="measuretheory.html"><i class="fa fa-check"></i><b>3</b> Measure Theory</a><ul>
+<li class="chapter" data-level="3.1" data-path="measuretheory.html"><a href="measuretheory.html#sigma"><i class="fa fa-check"></i><b>3.1</b> <span class="math inline">\(\sigma\)</span>-algebra</a></li>
+<li class="chapter" data-level="3.2" data-path="measuretheory.html"><a href="measuretheory.html#measure"><i class="fa fa-check"></i><b>3.2</b> Measure</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
-<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -99,7 +94,7 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="measure" class="section level1">
+<div id="measuretheory" class="section level1">
 <h1><span class="header-section-number">Chapter 3</span> Measure Theory</h1>
 <p>측도론이란, 간단히 말하면 집합의 크기를 측정하기 위한 학문입니다.
 특히, 함수공간과 확률공간 같이 추상적인 공간을 다룰 때에 중요한 학문이죠.</p>
@@ -168,7 +163,7 @@
 </tr>
 <tr class="even">
 <td align="left">Let <span class="math inline">\(S\)</span> be a set, and let <span class="math inline">\(\mathcal{F}\)</span> be a family of subsets of <span class="math inline">\(S\)</span>.
-<span class="math inline">\(\mathcal{F}\)</span> is called a <span class="math inline">\(\sigma\)</span>-algebra if <br/>
+<span class="math inline">\(\mathcal{F}\)</span> is called a <strong><span class="math inline">\(\sigma\)</span>-algebra</strong> if <br/>
 <br/>
 1. <span class="math inline">\(\emptyset \in \mathcal{F}\)</span> <br/>
 2. <span class="math inline">\(A \in \mathcal{F}\)</span> implies <span class="math inline">\(A^c \in \mathcal{F}\)</span> <br/>
@@ -194,7 +189,7 @@
 </tr>
 <tr class="even">
 <td align="left">Let <span class="math inline">\(S\)</span> be a set, and let <span class="math inline">\(\mathcal{F}\)</span> be a <span class="math inline">\(\sigma\)</span>-algebra of subsets of <span class="math inline">\(S\)</span>.
-Then <span class="math inline">\((S, \mathcal{F})\)</span> is called a measurable space.
+Then <span class="math inline">\((S, \mathcal{F})\)</span> is called a <strong>measurable space</strong>.
 The elements of <span class="math inline">\(\mathcal{F}\)</span> are called measurable sets.</td>
 </tr>
 </tbody>
@@ -219,7 +214,7 @@ The elements of <span class="math inline">\(\mathcal{F}\)</span> are called meas
 </tr>
 <tr class="even">
 <td align="left">Let <span class="math inline">\(S\)</span> be a set and <span class="math inline">\(G\)</span> be a family of subsets of <span class="math inline">\(S\)</span>. The smallest <span class="math inline">\(\sigma\)</span>-algbera
-which contains <span class="math inline">\(G\)</span> is called generated <span class="math inline">\(\sigma\)</span>-algebra with respect to <span class="math inline">\(G\)</span> denoted by
+which contains <span class="math inline">\(G\)</span> is called <strong>generated <span class="math inline">\(\sigma\)</span>-algebra</strong> with respect to <span class="math inline">\(G\)</span> denoted by
 <span class="math inline">\(\sigma(G)\)</span>.</td>
 </tr>
 </tbody>
@@ -234,7 +229,7 @@ which contains <span class="math inline">\(G\)</span> is called generated <span 
 <td align="left"><strong>Definition 4 - Borel <span class="math inline">\(\sigma\)</span>-algebra </strong></td>
 </tr>
 <tr class="even">
-<td align="left">The Borel <span class="math inline">\(\sigma\)</span>-algebra <span class="math inline">\(\mathcal{B}\)</span> of a topological space <span class="math inline">\((S, \mathcal{T})\)</span>
+<td align="left"><strong>The Borel <span class="math inline">\(\sigma\)</span>-algebra</strong> <span class="math inline">\(\mathcal{B}\)</span> of a topological space <span class="math inline">\((S, \mathcal{T})\)</span>
 is the <span class="math inline">\(\sigma\)</span>-algebra generated by <span class="math inline">\(\mathcal{T}\)</span>.</td>
 </tr>
 </tbody>
@@ -257,7 +252,7 @@ is the <span class="math inline">\(\sigma\)</span>-algebra generated by <span cl
 <tr class="even">
 <td align="left">Let <span class="math inline">\((S, \mathcal{F})\)</span>, <span class="math inline">\((S&#39;, \mathcal{F}&#39;)\)</span> be measurable spaces and
 <span class="math inline">\(f:\, S \rightarrow S&#39;\)</span>. If <span class="math inline">\(\forall X \in \mathcal{F}&#39;\)</span>,
-<span class="math inline">\(f^{-1}(X) \in \mathcal{F}\)</span> then <span class="math inline">\(f\)</span> is called measurable function.</td>
+<span class="math inline">\(f^{-1}(X) \in \mathcal{F}\)</span> then <span class="math inline">\(f\)</span> is called <strong>measurable function</strong>.</td>
 </tr>
 </tbody>
 </table>
@@ -297,6 +292,147 @@ defined as
 </table>
 <p>위 예시의 증명은 아주 간단하므로 생략하겠습니다. 한 번 해보고 넘어가면 이해가 잘 될테니 꼭
 해보시길 바랍니다. 이제 측정가능성은 대부분 논의했으니 진정한 목표인 측도로 가봅시다.</p>
+</div>
+<div id="measure" class="section level2">
+<h2><span class="header-section-number">3.2</span> Measure</h2>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 7 - Measure </strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\((S,\mathcal{F})\)</span> be measurable space and let <span class="math inline">\(\mu:\, \mathcal{F} \rightarrow [0,\infty)\)</span>
+be a function. <span class="math inline">\(\mu\)</span> is <strong>measure</strong> on <span class="math inline">\(\mathcal{F}\)</span> if <br/>
+1. <span class="math inline">\(\mu(\emptyset) = 0\)</span> <br/>
+2. <span class="math inline">\(\mu\)</span> is <span class="math inline">\(\sigma\)</span>-additive. That is, for disjoint family <span class="math inline">\(\left\{A_i \right\}_{i=1}^\infty \in \mathcal{F}\)</span>,
+<span class="math display">\[\mu \left(\bigcup_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty \mu(A_i)\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>정의는 아주 자명합니다. 비록 크기가 무엇인지 감이 잘 오진 않더라도 공집합의 크기는 반드시 0일
+것이며 전혀 겹치지 않는 집합들의 합집합의 크기는 각 집합들의 크기의 합과 같을 것입니다. 또한 위
+정의에서 유심히 보아야 할 부분은 <span class="math inline">\(\mu\)</span> 즉, 측도가 측정가능한 집합을 음이 아닌 값의 실수로 보내는
+함수라는 것입니다. 우리는 음의 부피를 정의하지 않고 또한 음의 확률을 정의하지 않습니다. 사실
+너무나 당연하게 써 왔던 이러한 사실을 측도라는 비교적 간단한 정의를 이용하여 수학적으로 못 박아둔
+것이죠. 이제 측도도 생겼으니 새로운 공간을 정의하여 봅시다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 8 - Measure space </strong></td>
+</tr>
+<tr class="even">
+<td align="left">The triple <span class="math inline">\((S, \mathcal{F}, \mu)\)</span> is a <strong>measure space</strong> if
+<span class="math inline">\((S,\mathcal{F})\)</span> is a measurable space and <span class="math inline">\(\mu\)</span> is a measure on <span class="math inline">\(\mathcal{F}\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>순수 수학자들이 아닌 이상 응용수학이나 물리, 통계학에서는 측정 가능성도 꽤 중요하겠지만 더욱
+중요한 것은 정확히 측정하는 것입니다. 따라서 이제부터는 새로 정의한 측도공간(Measure Space)
+을 사용할 것입니다. 이러한 측도 공간에서도 <span class="math inline">\(n\)</span>차원 실수 공간은 특히 더욱 중요해서 따로 이름을
+붙입니다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 9 - Lebesgue measure </strong></td>
+</tr>
+<tr class="even">
+<td align="left">The <strong>Lebesgue measure</strong> <span class="math inline">\(\lambda\)</span> on <span class="math inline">\(\mathbb{R}^d\)</span> is a measure on the Borel
+<span class="math inline">\(\sigma\)</span>-algebra of <span class="math inline">\(\mathbb{R}^d\)</span> such that the <span class="math inline">\(\lambda\)</span> measure of each
+rectangle equals to its volume.</td>
+</tr>
+</tbody>
+</table>
+<p>정의는 조금 복잡할지라도 의미는 간단합니다. 직육면체의 부피를 측정하는 측도를 <strong>르벡 측도(Lebesgue
+measure)</strong>라고 부른다는 것이죠. Lebesgue의 이름은 수학 어디서나 등장하기 때문에 익숙해지는 것이
+좋습니다. 이제 측도도 생겼으니 본격적으로 집합의 크기를 측정해봅시다. 물론, 처음부터 복잡한 함
+수로 표현되는 공간의 크기를 구하기란 아주 어려운 일이므로, 우리는 아주 단순한 함수부터 시작해서
+일반화하는 방향으로 접근할 것입니다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 10 - Simple function </strong></td>
+</tr>
+<tr class="even">
+<td align="left">A function, which image is finite, is called <strong>simple function</strong>.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Property 1 - Simple function with indicator function </strong></td>
+</tr>
+<tr class="even">
+<td align="left">If <span class="math inline">\(\varphi: \chi \rightarrow \mathbb{R}\)</span> is simple function then we can write
+<span class="math display">\[\varphi = \sum_{i=1}^n a_i I_{E_i}\]</span>
+where <span class="math inline">\(\left\{a_i \right\}\)</span> is image of <span class="math inline">\(\varphi\)</span> and <span class="math inline">\(E_i = \varphi^{-1}(\left\{a_i \right\})\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>수학에서 사용되는 전형적인 단순한 함수는 바로 위에서 정의한 Simple function입니다. 사실 본래 정의는
+매우 간단하지만, 보통 Simple function이라 하면 대개 Property 1을 생각합니다. 대체 이 함수가
+뭐가 단순한건지 의아하겠지만, 이러한 함수에 대해서는 적분을 아주 쉽게 정의할 수 있습니다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 11 - Lebesgue integral for simple function </strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\((S,\mathcal{F}, \mu)\)</span> be measure space and <span class="math inline">\(\displaystyle f = \sum_{i=1}^n a_i I_{E_i}\)</span>
+be a simple function. Then the <strong>Lebesgue Integral</strong> of <span class="math inline">\(f\)</span> with respect to <span class="math inline">\(\mu\)</span> is defined by
+<span class="math display">\[ \int_S f d\mu = \sum_{i=1}^n a_i \mu(E_i) \]</span></td>
+</tr>
+</tbody>
+</table>
+<p>분명 정의는 했는데 대체 무슨 뜻인지 의아할 수 있으므로 쉽게 예시를 들어봅시다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Example 4 - Example of Lebesgue integral for simple function </strong></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(f\)</span> is a simple function given as:
+<span class="math display">\[f =
+\begin{cases}
+1 &amp; \text{if } 0 \leq x &lt; 1 \\
+2 &amp; \text{if } 1 \leq x &lt; 3 \\
+3 &amp; \text{if } 3 \leq x &lt; 4 \\
+0 &amp; \text{otherwise}
+\end{cases}\]</span></td>
+</tr>
+<tr class="odd">
+<td align="left">then find integral of <span class="math inline">\(f \in \mathbb{R}\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>이 문제는 직사각형의 넓이만 구할 수 있으면 아주 쉽게 구할 수 있습니다.</p>
+<div class="figure"><span id="fig:unnamed-chunk-1"></span>
+<img src="ML_with_Rust_files/figure-html/unnamed-chunk-1-1.png" alt="Simple function example" width="672" />
+<p class="caption">
+Figure 3.1: Simple function example
+</p>
+</div>
 
 </div>
 </div>
@@ -306,7 +442,7 @@ defined as
         </div>
       </div>
 <a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
