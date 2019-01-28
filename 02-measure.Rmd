@@ -234,7 +234,6 @@ $$f =
     3 & \text{if } 3 \leq x < 4 \\
     0 & \text{otherwise}
 \end{cases}$$
-
 then find integral of $f \in \mathbb{R}$.
 ------------------------------------------------------------------------
 
