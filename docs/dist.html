@@ -282,6 +282,15 @@ Therefore we can find <span class="math inline">\(\mu_{ML}\)</span>.
 
     <span class="pp">println!</span>(<span class="st">&quot;Samples:</span><span class="sc">\n</span><span class="st">{:?}&quot;</span>, v);
 <span class="op">}</span></code></pre>
+<p>이미 구현되어 있는 라이브러리인 <a href="https://crates.io/crates/peroxide">Peroxide</a>을 사용한 결과는 다음과 같습니다.</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">extern</span> <span class="kw">crate</span> peroxide;
+<span class="kw">use</span> <span class="pp">peroxide::</span>*;
+
+<span class="kw">fn</span> main() <span class="op">{</span>
+    <span class="kw">let</span> b = Bernoulli(<span class="dv">0.1</span>);
+    <span class="kw">let</span> b_samples = b.sample(<span class="dv">100</span>);
+    b.print();
+<span class="op">}</span></code></pre>
 
 </div>
 </div>

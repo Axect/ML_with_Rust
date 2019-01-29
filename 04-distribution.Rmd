@@ -94,3 +94,16 @@ fn main() {
     println!("Samples:\n{:?}", v);
 }
 ```
+
+이미 구현되어 있는 라이브러리인 [Peroxide](https://crates.io/crates/peroxide)을 사용한 결과는 다음과 같습니다.
+
+```rust
+extern crate peroxide;
+use peroxide::*;
+
+fn main() {
+    let b = Bernoulli(0.1);
+    let b_samples = b.sample(100);
+    b.print();
+}
+```
