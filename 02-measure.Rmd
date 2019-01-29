@@ -137,7 +137,7 @@ defined as
 $$I_A(x) \equiv 
 \begin{cases}
     1 & \text{if } x \in A, \\ 
-    0 & \text{if } x \neq A.
+    0 & \text{if } x \notin A.
 \end{cases}$$
 ------------------------------------------------------------------------
 

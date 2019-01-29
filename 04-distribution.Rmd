@@ -19,7 +19,7 @@
 정의는 다음과 같습니다.
 
 ------------------------------------------------------------------------
-**Definition 5.1 - Bernoulli distribution**
+**Definition 5.1.1 - Bernoulli distribution**
 
 Let consider a single binary random variable $x\in\{0,1\}$.
 Suppose the probability of $x=1$ is given as $p(x=1|\mu) = \mu$ where
@@ -31,7 +31,7 @@ is called **Bernoulli distribution**.
 앞에서 배웠던 기댓값과 분산의 정의를 이용하면 다음을 아주 쉽게 알아낼 수 있습니다.
 
 ------------------------------------------------------------------------
-**Theorem 5.2 - Representative values of Bernouli distribution **
+**Theorem 5.1.2 - Representative values of Bernouli distribution **
 
 Let $\text{Bern}(x|\mu)$ be given Bernoulli distribution. Then
 $$\begin{align}
