@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 4 Probability | Machine Learning with Rust</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 4 Probability | Machine Learning with Rust" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="axect/ML_with_Rust" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Probability | Machine Learning with Rust" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Tae Geun Kim">
+
+
+<meta name="date" content="2019-01-29">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="measuretheory.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Machine Learning with Rust</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="measuretheory.html"><a href="measuretheory.html"><i class="fa fa-check"></i><b>3</b> Measure Theory</a><ul>
+<li class="chapter" data-level="3.1" data-path="measuretheory.html"><a href="measuretheory.html#sigma"><i class="fa fa-check"></i><b>3.1</b> Sigma-algebra</a></li>
+<li class="chapter" data-level="3.2" data-path="measuretheory.html"><a href="measuretheory.html#measure"><i class="fa fa-check"></i><b>3.2</b> Measure</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="prob.html"><a href="prob.html"><i class="fa fa-check"></i><b>4</b> Probability</a><ul>
+<li class="chapter" data-level="4.1" data-path="prob.html"><a href="prob.html#inequalities"><i class="fa fa-check"></i><b>4.1</b> Inequalities</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning with Rust</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="prob" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Probability</h1>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 16 - Probability space </strong></td>
+</tr>
+<tr class="even">
+<td align="left">A measure space <span class="math inline">\((\Omega, \mathcal{F}, \mathbf{P})\)</span> is called a probability space
+if <span class="math inline">\(\mathbf{P}(\Omega) = 1\)</span>. <span class="math inline">\(\Omega\)</span> is called the sample space, the measure sets
+are called events, and the measurable functions are called random variables.
+If <span class="math inline">\(X_1, X_2, \cdots, X_n\)</span> are random variables then <span class="math inline">\(X = (X_1,X_2,\cdots,X_n)\)</span>
+is a vector-valued random variable.</td>
+</tr>
+</tbody>
+</table>
+<p>확률공간의 정의는 간단합니다. 어떤 측도공간 <span class="math inline">\((\Omega, \mathcal{F}, \mathbf{P})\)</span>가 <span class="math inline">\(\mathbf{P}(\Omega) = 1\)</span>을 만족할 때,
+그 측도공간을 확률 공간이라 부른다는 것입니다. 또한, 전체 집합인 <span class="math inline">\(\Omega\)</span>는 표본공간(Sample space)이라 부르며
+가측집합(Measurable set)들은 사건(Events)이라 부르고 가측함수(Measurable function)들은 확률변수(Random variable)라고
+부른다는 것이죠. 계속해서 다른 정의들을 봅시다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 17 - Distribution of Random variables </strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\(X\)</span> be a random variable, then <span class="math inline">\(X\)</span> induces the measure <span class="math inline">\(\mu\)</span> on the Borel <span class="math inline">\(\sigma\)</span>-algebra of <span class="math inline">\(\mathbb{R}\)</span> by
+<span class="math display">\[\mu(B) = \mathbf{P}\left\{\{ \omega:\, X(\omega) \in B\} \right\} \equiv \mathbf{P}\left\{X \in B \right\},~ B \in \mathcal{B}\]</span>
+The induced probability measure <span class="math inline">\(\mu\)</span> is called the distribution of random variable <span class="math inline">\(X\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>앞에서 말한 Induced measure가 뜬금없이 튀어나왔는데, 굳이 그 부분을 볼 필요까지는 없습니다.
+여기서 기억해야 할 것은 <span class="math inline">\(\mu(B) = \mathbf{P}\left\{X \in B \right\}\)</span>입니다.
+이는 우리가 흔히 사용하던 확률과 상당히 유사합니다. 집합 <span class="math inline">\(B\)</span>에 확률변수 <span class="math inline">\(X\)</span>가 들어갈 확률을 새로운 <span class="math inline">\(\mu\)</span>라는
+측도로 정의한 것이죠. 이때, <span class="math inline">\(\mu\)</span>의 이름은 확률변수 <span class="math inline">\(X\)</span>의 분포(Distribution)입니다.
+즉, 흔히 말하는 확률분포를 구한다는 것은 측도 <span class="math inline">\(\mu\)</span>를 구한다는 것과 동치입니다.</p>
+<p>이제 볼 정의는 상당히 많이 사용하므로 특히나 주의 깊게 보시길 바랍니다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 18 - Expectation </strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\(X\)</span> be a random variable. The expectation of <span class="math inline">\(X\)</span> is the integral of <span class="math inline">\(X\)</span> with respect to
+distribution <span class="math inline">\(\mu\)</span> of <span class="math inline">\(X\)</span>.
+<span class="math display">\[\mathbf{E}\left\{X \right\} = \int_{\mathbb{R}} x \mu(dx)\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>위에 명시한 적분이 낯설 수 있는데, 이는 보통 르벡 적분을 표현하는 방식이 여러가지이기 때문입니다.
+<span class="math display">\[\int_S f d\mu = \int_S f(s) \mu(ds)\]</span>
+하지만 이를 차치하고서라도 위 정의는 이상해보일 수 있습니다. <span class="math inline">\(X\)</span>에 대한 기댓값이라면서 <span class="math inline">\(X\)</span>가
+적분식에 포함되어 있지 않습니다. 하지만 자세히 보면 <span class="math inline">\(\mu\)</span>가 <span class="math inline">\(X\)</span>의 분포이기에 <span class="math inline">\(\mu\)</span>안에 <span class="math inline">\(X\)</span>의 값이
+포함되어 있다는 것을 알 수 있습니다.</p>
+<p>이제 기댓값의 정의가 나왔으니 자연스러운 수순으로 분산의 정의를 봅시다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 19 - Variance </strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\(X\)</span> be a random variable. The variance of <span class="math inline">\(X\)</span> is
+<span class="math display">\[\text{Var}\left\{X \right\} = \mathbf{E}\left\{(X - \mathbf{E}\{X\})^2 \right\}\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>우리가 알고 있던 분산의 정의와 정확히 일치합니다. 즉, 측도론으로부터 유도되긴 했지만
+실제 계산은 고등학교에서 배웠던 확률과 통계와 크게 다르지 않다는 것을 알 수 있습니다.
+이제 또 다른 익숙한 개념을 새롭게 정의해봅시다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 20 - Joint distribution &amp; Independence </strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\(X_1, \cdots, X_n\)</span> be random variables. They induce the measure <span class="math inline">\(\mu^{(n)}\)</span>
+on the Borel <span class="math inline">\(\sigma\)</span>-algebra of <span class="math inline">\(\mathbb{R}^n\)</span> with the property
+<span class="math display">\[\mu^{(n)}(B_1 \times \cdots \times B_n) = \mathbf{P}\left\{X_1\in B_1,\cdots,X_n\in B_n \right\},~ B_1,\cdots,B_n \in \mathcal{B}\]</span>
+<span class="math inline">\(\mu^{(n)}\)</span> is called the <strong>joint distribution</strong> of random variables.
+Let <span class="math inline">\(\mu_i\)</span> be the distribution of <span class="math inline">\(X_i\)</span>, the random variables <span class="math inline">\(\left\{X_i \right\}_{i=1}^n\)</span>
+are <strong>independent</strong> if <span class="math inline">\(\mu^{(n)}\)</span> is the product measure of <span class="math inline">\(\left\{\mu_i \right\}_{i=1}^n\)</span>.
+The events <span class="math inline">\(A_1,\cdots,A_n \in \mathcal{F}\)</span> are independent if the random variables
+<span class="math inline">\(I_{A_1},\cdots,I_{A_n}\)</span> are independent.</td>
+</tr>
+</tbody>
+</table>
+<p>위 정의는 한 마디로 요약하면 확률변수 <span class="math inline">\(n\)</span>개의 분포가 각각의 확률변수들의 분포에 대해 곱측도(Product measure)이면
+확률변수들을 독립이라 부르겠다는 것입니다. 우리가 알던 정의와 조금 달라보이지만, 확률측도로 변경하여 보면 위 정의는 다음 식으로 귀결됩니다.
+<span class="math display">\[\mathbf{P}\left\{X_1\in B_1, \cdots, X_n \in B_n \right\} = \mathbf{P}\left\{X_1 \in B_1 \right\} \times \cdots \times \mathbf{P}\left\{X_n \in B_n \right\}\]</span>
+이제 우리가 알던 독립의 정의와 같아졌습니다. 또한 위 정의는 단순히 확률 변수들의 독립 뿐만 아니라 사건들의 독립도 정의하였습니다.
+특이하게도 각 사건들의 Indicator function들이 독립이면 그 사건들도 독립이라고 정의되어 있는데 Indicator function 역시
+Measurable function이므로 확률 변수에 해당하니 정의 자체는 충분히 받아들일 수 있습니다.
+위 정의를 받아들이면 아래의 중요한 정리를 쉽게 유도할 수 있습니다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Theorem 6 - Independence with Expectation </strong></td>
+</tr>
+<tr class="even">
+<td align="left">If <span class="math inline">\(X_1, \cdots, X_n\)</span> are independent and have finite expectations then
+<span class="math display">\[\mathbf{E}\left\{X_1 X_2 \cdots X_n \right\} = \mathbf{E}\{X_1\}\cdots \mathbf{E}\{X_n\}\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>증명은 Independence, product measure의 정의들과 Fubini’s theorem을 적용하면 쉽게 증명되니 생략하겠습니다.</p>
+<div id="inequalities" class="section level2">
+<h2><span class="header-section-number">4.1</span> Inequalities</h2>
+<p>이제 지루한 수학 단원의 마지막입니다. 앞으로 논리를 전개하는데 유용한 부등식들을 소개하고 마치도록 하겠습니다.</p>
+<ul>
+<li>Cauchy-Schwarz: <span class="math inline">\(|\mathbf{E}\{XY\}| \leq \sqrt{\mathbf{E}\{X^2\}\mathbf{E}\{Y^2\}}\)</span></li>
+<li>Hölder: <span class="math inline">\(p,q\in(1,\infty),\,\frac{1}{p} + \frac{1}{q} = 1\, \Rightarrow \mathbf{E}\{|XY|\} \leq \left(\mathbf{E}\{|X^p|\}\right)^{1/p} \cdot \left(\mathbf{E}\{|Y|^q\}\right)^{1/q}\)</span></li>
+<li>Markov: Given non-negative <span class="math inline">\(X\)</span>, <span class="math inline">\(\forall t &gt; 0, ~ \mathbf{P}(X \geq t) \leq \frac{\mathbf{E}(X)}{t}\)</span></li>
+<li>Chebyshev: <span class="math inline">\(\forall t &gt;0, ~ \mathbf{P}(|X - \mathbf{E}X| \geq t) \leq \frac{\text{Var}(X)}{t^2}\)</span></li>
+<li>Chebyshev - Cantelli: <span class="math inline">\(\forall t \geq 0,~\mathbf{P}(X - \mathbf{E}X &gt; t) \leq \frac{\text{Var}(X)}{\text{Var}(X) + t^2}\)</span></li>
+</ul>
+<p>위의 부등식들도 상당히 중요하지만 다음 2개의 부등식은 특히나 중요하기에 정리로 따로 정리하였습니다.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Theorem 7 - Jensen’s inequality </strong></td>
+</tr>
+<tr class="even">
+<td align="left">If <span class="math inline">\(F\)</span> is a real-valued convex function on a finite or infinite interval of <span class="math inline">\(\mathbb{R}\)</span>
+and <span class="math inline">\(X\)</span> is a random variable with finite expectation taking its values in this interval. then
+<span class="math display">\[f(\mathbf{E}(X)) \leq \mathbf{E}(f(X))\]</span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Theorem 8 - Association inequality </strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\(X\)</span> be a real-valued random variable and <span class="math inline">\(f,g\)</span> are real-valued function<br/>
+1. <span class="math inline">\(f,g\)</span> are monotone non-decreasing then
+<span class="math display">\[ \mathbf{E}\left\{f(X)g(X) \right\} \geq \mathbf{E}\left\{f(X) \right\} \mathbf{E}\left\{g(X) \right\}\]</span>
+2. <span class="math inline">\(f\)</span> is monotone increasing and <span class="math inline">\(g\)</span> is monotone decreasing then
+<span class="math display">\[\mathbf{E}\left\{f(X)g(X) \right\}\leq \mathbf{E}\left\{f(X) \right\}\mathbf{E}\left\{g(X) \right\}\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>그럼 이제 소소한 일탈을 마치고 다시 우리의 본분인 머신러닝으로 돌아가봅시다.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="measuretheory.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/03-probability.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["ML_with_Rust.pdf", "ML_with_Rust.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

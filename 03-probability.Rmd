@@ -1,0 +1,121 @@
+# Probability {#prob}
+
+------------------------------------------------------------------------
+**Definition 16 - Probability space **
+
+A measure space $(\Omega, \mathcal{F}, \mathbf{P})$ is called a probability space
+if $\mathbf{P}(\Omega) = 1$. $\Omega$ is called the sample space, the measure sets
+are called events, and the measurable functions are called random variables.
+If $X_1, X_2, \cdots, X_n$ are random variables then $X = (X_1,X_2,\cdots,X_n)$
+is a vector-valued random variable.
+------------------------------------------------------------------------
+
+확률공간의 정의는 간단합니다. 어떤 측도공간 $(\Omega, \mathcal{F}, \mathbf{P})$가 $\mathbf{P}(\Omega) = 1$을 만족할 때,
+그 측도공간을 확률 공간이라 부른다는 것입니다. 또한, 전체 집합인 $\Omega$는 표본공간(Sample space)이라 부르며
+가측집합(Measurable set)들은 사건(Events)이라 부르고 가측함수(Measurable function)들은 확률변수(Random variable)라고
+부른다는 것이죠. 계속해서 다른 정의들을 봅시다.
+
+------------------------------------------------------------------------
+**Definition 17 - Distribution of Random variables **
+
+Let $X$ be a random variable, then $X$ induces the measure $\mu$ on the Borel $\sigma$-algebra of $\mathbb{R}$ by
+$$\mu(B) = \mathbf{P}\left\{\{ \omega:\, X(\omega) \in B\} \right\} \equiv \mathbf{P}\left\{X \in B \right\},~ B \in \mathcal{B}$$
+The induced probability measure $\mu$ is called the distribution of random variable $X$.
+------------------------------------------------------------------------
+
+앞에서 말한 Induced measure가 뜬금없이 튀어나왔는데, 굳이 그 부분을 볼 필요까지는 없습니다.
+여기서 기억해야 할 것은 $\mu(B) = \mathbf{P}\left\{X \in B \right\}$입니다.
+이는 우리가 흔히 사용하던 확률과 상당히 유사합니다. 집합 $B$에 확률변수 $X$가 들어갈 확률을 새로운 $\mu$라는
+측도로 정의한 것이죠. 이때, $\mu$의 이름은 확률변수 $X$의 분포(Distribution)입니다.
+즉, 흔히 말하는 확률분포를 구한다는 것은 측도 $\mu$를 구한다는 것과 동치입니다.
+
+이제 볼 정의는 상당히 많이 사용하므로 특히나 주의 깊게 보시길 바랍니다.
+
+------------------------------------------------------------------------
+**Definition 18 - Expectation **
+
+Let $X$ be a random variable. The expectation of $X$ is the integral of $X$ with respect to
+distribution $\mu$ of $X$.
+$$\mathbf{E}\left\{X \right\} = \int_{\mathbb{R}} x \mu(dx)$$
+------------------------------------------------------------------------
+
+위에 명시한 적분이 낯설 수 있는데, 이는 보통 르벡 적분을 표현하는 방식이 여러가지이기 때문입니다.
+$$\int_S f d\mu = \int_S f(s) \mu(ds)$$
+하지만 이를 차치하고서라도 위 정의는 이상해보일 수 있습니다. $X$에 대한 기댓값이라면서 $X$가
+적분식에 포함되어 있지 않습니다. 하지만 자세히 보면 $\mu$가 $X$의 분포이기에 $\mu$안에 $X$의 값이
+포함되어 있다는 것을 알 수 있습니다.
+
+이제 기댓값의 정의가 나왔으니 자연스러운 수순으로 분산의 정의를 봅시다.
+
+------------------------------------------------------------------------
+**Definition 19 - Variance **
+
+Let $X$ be a random variable. The variance of $X$ is
+$$\text{Var}\left\{X \right\} = \mathbf{E}\left\{(X - \mathbf{E}\{X\})^2 \right\}$$
+------------------------------------------------------------------------
+
+우리가 알고 있던 분산의 정의와 정확히 일치합니다. 즉, 측도론으로부터 유도되긴 했지만
+실제 계산은 고등학교에서 배웠던 확률과 통계와 크게 다르지 않다는 것을 알 수 있습니다.
+이제 또 다른 익숙한 개념을 새롭게 정의해봅시다.
+
+------------------------------------------------------------------------
+**Definition 20 - Joint distribution \& Independence **
+
+Let $X_1, \cdots, X_n$ be random variables. They induce the measure $\mu^{(n)}$
+on the Borel $\sigma$-algebra of $\mathbb{R}^n$ with the property
+$$\mu^{(n)}(B_1 \times \cdots \times B_n) = \mathbf{P}\left\{X_1\in B_1,\cdots,X_n\in B_n \right\},~ B_1,\cdots,B_n \in \mathcal{B}$$
+$\mu^{(n)}$ is called the **joint distribution** of random variables.
+Let $\mu_i$ be the distribution of $X_i$, the random variables $\left\{X_i \right\}_{i=1}^n$
+are **independent** if $\mu^{(n)}$ is the product measure of $\left\{\mu_i \right\}_{i=1}^n$.
+The events $A_1,\cdots,A_n \in \mathcal{F}$ are independent if the random variables
+$I_{A_1},\cdots,I_{A_n}$ are independent.
+------------------------------------------------------------------------
+
+위 정의는 한 마디로 요약하면 확률변수 $n$개의 분포가 각각의 확률변수들의 분포에 대해 곱측도(Product measure)이면
+확률변수들을 독립이라 부르겠다는 것입니다. 우리가 알던 정의와 조금 달라보이지만, 확률측도로 변경하여 보면 위 정의는 다음 식으로 귀결됩니다.
+$$\mathbf{P}\left\{X_1\in B_1, \cdots, X_n \in B_n \right\} = \mathbf{P}\left\{X_1 \in B_1 \right\} \times \cdots \times \mathbf{P}\left\{X_n \in B_n \right\}$$
+이제 우리가 알던 독립의 정의와 같아졌습니다. 또한 위 정의는 단순히 확률 변수들의 독립 뿐만 아니라 사건들의 독립도 정의하였습니다.
+특이하게도 각 사건들의 Indicator function들이 독립이면 그 사건들도 독립이라고 정의되어 있는데 Indicator function 역시
+Measurable function이므로 확률 변수에 해당하니 정의 자체는 충분히  받아들일 수 있습니다.
+위 정의를 받아들이면 아래의 중요한 정리를 쉽게 유도할 수 있습니다.
+
+------------------------------------------------------------------------
+**Theorem 6 - Independence with Expectation **
+
+If $X_1, \cdots, X_n$ are independent and have finite expectations then
+$$\mathbf{E}\left\{X_1 X_2 \cdots X_n \right\} = \mathbf{E}\{X_1\}\cdots \mathbf{E}\{X_n\}$$
+------------------------------------------------------------------------
+
+증명은 Independence, product measure의 정의들과 Fubini's theorem을 적용하면 쉽게 증명되니 생략하겠습니다.
+
+## Inequalities
+
+이제 지루한 수학 단원의 마지막입니다. 앞으로 논리를 전개하는데 유용한 부등식들을 소개하고 마치도록 하겠습니다.
+
+* Cauchy-Schwarz:  $|\mathbf{E}\{XY\}| \leq \sqrt{\mathbf{E}\{X^2\}\mathbf{E}\{Y^2\}}$
+* H&ouml;lder: $p,q\in(1,\infty),\,\frac{1}{p} + \frac{1}{q} = 1\, \Rightarrow \mathbf{E}\{|XY|\} \leq \left(\mathbf{E}\{|X^p|\}\right)^{1/p} \cdot \left(\mathbf{E}\{|Y|^q\}\right)^{1/q}$
+* Markov: Given non-negative $X$, $\forall t > 0, ~ \mathbf{P}(X \geq t) \leq \frac{\mathbf{E}(X)}{t}$
+* Chebyshev: $\forall t >0, ~ \mathbf{P}(|X - \mathbf{E}X| \geq t) \leq \frac{\text{Var}(X)}{t^2}$
+* Chebyshev - Cantelli: $\forall t \geq 0,~\mathbf{P}(X - \mathbf{E}X > t) \leq \frac{\text{Var}(X)}{\text{Var}(X) + t^2}$
+
+위의 부등식들도 상당히 중요하지만 다음 2개의 부등식은 특히나 중요하기에 정리로 따로 정리하였습니다.
+
+------------------------------------------------------------------------
+**Theorem 7 - Jensen's inequality **
+
+If $F$ is a real-valued convex function on a finite or infinite interval of $\mathbb{R}$
+and $X$ is a random variable with finite expectation taking its values in this interval. then
+$$f(\mathbf{E}(X)) \leq \mathbf{E}(f(X))$$
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+**Theorem 8 - Association inequality **
+
+Let $X$ be a real-valued random variable and $f,g$ are real-valued function<br/>
+1. $f,g$ are monotone non-decreasing then
+$$ \mathbf{E}\left\{f(X)g(X) \right\} \geq \mathbf{E}\left\{f(X) \right\} \mathbf{E}\left\{g(X) \right\}$$
+2. $f$ is monotone increasing and $g$ is monotone decreasing then
+$$\mathbf{E}\left\{f(X)g(X) \right\}\leq \mathbf{E}\left\{f(X) \right\}\mathbf{E}\left\{g(X) \right\}$$
+------------------------------------------------------------------------
+
+그럼 이제 소소한 일탈을 마치고 다시 우리의 본분인 머신러닝으로 돌아가봅시다.
