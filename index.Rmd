@@ -1,5 +1,5 @@
 --- 
-title: "Machine Learning with Rust"
+title: "Precise Machine Learning with Rust"
 author: "Tae Geun Kim"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
