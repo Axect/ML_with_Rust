@@ -25,7 +25,7 @@
 <meta name="author" content="Tae Geun Kim">
 
 
-<meta name="date" content="2019-02-08">
+<meta name="date" content="2019-02-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -142,6 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="dist.html"><a href="dist.html"><i class="fa fa-check"></i><b>5</b> Probability Distributions</a><ul>
 <li class="chapter" data-level="5.1" data-path="dist.html"><a href="dist.html#binary-variables"><i class="fa fa-check"></i><b>5.1</b> Binary Variables</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="dist.html"><a href="dist.html#bernoulli-distribution"><i class="fa fa-check"></i><b>5.1.1</b> Bernoulli Distribution</a></li>
+<li class="chapter" data-level="5.1.2" data-path="dist.html"><a href="dist.html#beta-distribution"><i class="fa fa-check"></i><b>5.1.2</b> Beta Distribution</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -291,6 +292,98 @@ Therefore we can find <span class="math inline">\(\mu_{ML}\)</span>.
     <span class="kw">let</span> b_samples = b.sample(<span class="dv">100</span>);
     b.print();
 <span class="op">}</span></code></pre>
+</div>
+<div id="beta-distribution" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Beta Distribution</h3>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Definition 5.1.5 - Beta Distribution </strong></td>
+</tr>
+<tr class="even">
+<td align="left"><strong>The Beta distribution</strong> is a family of continuous probability distributions
+defined on the interval <span class="math inline">\([0, 1]\)</span> parametrized by two positive shape parameters,
+denoted by <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> :
+<span class="math display">\[\text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \mu^{\alpha-1}(1-\mu)^{\beta - 1}\]</span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Property 5.1.6 - Normalization of Beta distribution </strong></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math display">\[\int_0^1 \text{Beta}(\mu | \alpha, \beta) d\mu = 1\]</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Proof for Prop 5.1.6</strong></p>
+<p>To prove this, we should show next relation.
+<span class="math display">\[\int_0^1 \mu^{\alpha - 1}(1 - \mu)^{\beta - 1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\]</span>
+Then let’s start proof.
+<span class="math display">\[\begin{align}
+    \Gamma(\alpha)\Gamma(\beta) &amp;= \int_0^\infty \mu^{\alpha - 1}e^{-\mu}d\mu \int_0^\infty \nu^{\beta - 1}e^{-\nu}d\nu \\
+    &amp;= \int_0^\infty \int_0^\infty \mu^{\alpha - 1}\nu^{\beta-1}e^{-(\mu + \nu)} d\mu d\nu \\
+    &amp;= \int_0^\infty \left(\int_\mu^\infty \mu^{\alpha-1}(t-\mu)^{\beta - 1} e^{-t} dt\right)d\mu \\
+\end{align}\]</span></p>
+<p>For last line of above equations, I used the substitution <span class="math inline">\(t = \mu + \nu,~ dt = d\nu\)</span>.
+Next, let change order of integration.
+<span class="math display">\[\begin{align}
+    \Gamma(\alpha)\Gamma(\beta) &amp;= \int_0^\infty \left(\int_0^t \mu^{\alpha-1}(t-\mu)^{\beta-1}d\mu\right)e^{-t}dt \\
+    &amp;= \int_0^\infty \left(\int_0^1 (t\mu&#39;)^{\alpha-1}t^{\beta-1}(1-\mu&#39;)^{\beta-1}t d\mu&#39;\right)e^{-t}dt \\
+    &amp;= \int_0^\infty \left(\int_0^1 t^{\alpha + \beta - 1} \mu&#39;^{\alpha-1} (1- \mu&#39;)^{\beta-1} d\mu&#39;\right)e^{-t}dt \\
+    &amp;= \int_0^\infty t^{\alpha + \beta - 1} e^{-t}dt \cdot \int_0^1 \mu&#39;^{\alpha-1}(1-\mu&#39;)^{\beta-1}d\mu&#39;
+\end{align}\]</span></p>
+<p><span class="math display">\[\therefore \int_0^1 \mu^{\alpha - 1}(1-\mu)^{\beta-1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\]</span></p>
+<p>Then proof is finish.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Property 5.1.7 - Representative values of Beta distribution </strong></td>
+</tr>
+<tr class="even">
+<td align="left">Let <span class="math inline">\(\text{Beta}(\mu | \alpha, \beta)\)</span> be a given Beta distribution, then
+<span class="math display">\[\begin{aligned}
+\mathbb{E}[\mu] &amp;= \frac{\alpha}{\alpha + \beta} \\
+\text{var}[\mu] &amp;= \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)} \\
+\text{mode}[\mu] &amp;= \frac{\alpha - 1}{\alpha + \beta - 2}
+\end{aligned}\]</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Proof for prop 5.1.7</strong></p>
+<p>First, let’s see expectation value.
+<span class="math display">\[\begin{align}
+    \mathbb{E}[\mu] &amp;= \int_0^1 \mu \cdot \text{Beta}(\mu|\alpha, \beta)d\mu \\
+    &amp;= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \int_0^1 \mu \cdot \mu^{\alpha - 1}(1 - \mu)^{\beta - 1} d\mu \\
+    &amp;= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \int_0^1 \mu^{\alpha}(1-\mu)^{\beta-1}d\mu \\
+    &amp;= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \cdot \frac{\Gamma(\alpha + 1)\Gamma(\beta)}{\Gamma(\alpha + \beta + 1)} \\
+    &amp;= \frac{\alpha}{\alpha + \beta}
+\end{align}\]</span></p>
+<p>Next, see variation.
+<span class="math display">\[\begin{align}
+    \text{var}[\mu] &amp;= \int_0^1 \mu^2 \cdot \text{Beta}(\mu | \alpha, \beta)d\mu - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
+    &amp;= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \cdot \frac{\Gamma(\alpha + 2)\Gamma(\beta)}{\Gamma(\alpha + \beta + 2)} - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
+    &amp;= \frac{\alpha(\alpha + 1)}{(\alpha + \beta)(\alpha + \beta + 1)} - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
+    &amp;= \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}
+\end{align}\]</span></p>
+<p>Before viewing mode, we should differentiate Beta distribution under specific condition. <span class="math inline">\((\alpha, \beta &gt; 1)\)</span>.
+<span class="math display">\[\frac{\partial}{\partial \mu}\text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \left((\alpha- 1) \mu^{\alpha - 2}(1 - \mu)^{\beta - 1} - (\beta - 1)\mu^{\alpha - 1}(1 - \mu)^{\beta - 2} \right)\]</span></p>
+<p>Thus, we can find value of <span class="math inline">\(\mu\)</span> directly.
+<span class="math display">\[\begin{align}
+    &amp;(\alpha - 1)(1 - \mu) - (\beta - 1)\mu = 0 \\
+    \Rightarrow ~ &amp;\mu = \frac{\alpha - 1}{\alpha + \beta - 2}
+\end{align}\]</span></p>
 
 </div>
 </div>

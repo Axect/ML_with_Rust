@@ -107,3 +107,83 @@ fn main() {
     b.print();
 }
 ```
+
+### Beta Distribution
+
+------------------------------------------------------------------------
+**Definition 5.1.5 - Beta Distribution **
+
+**The Beta distribution** is a family of continuous probability distributions
+defined on the interval $[0, 1]$ parametrized by two positive shape parameters,
+denoted by $\alpha$ and $\beta$ :
+$$\text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \mu^{\alpha-1}(1-\mu)^{\beta - 1}$$
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+**Property 5.1.6 - Normalization of Beta distribution **
+
+$$\int_0^1 \text{Beta}(\mu | \alpha, \beta) d\mu = 1$$
+------------------------------------------------------------------------
+
+**Proof for Prop 5.1.6**
+
+To prove this, we should show next relation.
+$$\int_0^1 \mu^{\alpha - 1}(1 - \mu)^{\beta - 1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}$$
+Then let's start proof.
+\begin{align}
+    \Gamma(\alpha)\Gamma(\beta) &= \int_0^\infty \mu^{\alpha - 1}e^{-\mu}d\mu \int_0^\infty \nu^{\beta - 1}e^{-\nu}d\nu \\
+    &= \int_0^\infty \int_0^\infty \mu^{\alpha - 1}\nu^{\beta-1}e^{-(\mu + \nu)} d\mu d\nu \\
+    &= \int_0^\infty \left(\int_\mu^\infty \mu^{\alpha-1}(t-\mu)^{\beta - 1} e^{-t} dt\right)d\mu \\
+\end{align}
+
+For last line of above equations, I used the substitution $t = \mu + \nu,~ dt = d\nu$.
+Next, let change order of integration.
+\begin{align}
+    \Gamma(\alpha)\Gamma(\beta) &= \int_0^\infty \left(\int_0^t \mu^{\alpha-1}(t-\mu)^{\beta-1}d\mu\right)e^{-t}dt \\
+    &= \int_0^\infty \left(\int_0^1 (t\mu')^{\alpha-1}t^{\beta-1}(1-\mu')^{\beta-1}t d\mu'\right)e^{-t}dt \\
+    &= \int_0^\infty \left(\int_0^1 t^{\alpha + \beta - 1} \mu'^{\alpha-1} (1- \mu')^{\beta-1} d\mu'\right)e^{-t}dt \\
+    &= \int_0^\infty t^{\alpha + \beta - 1} e^{-t}dt \cdot \int_0^1 \mu'^{\alpha-1}(1-\mu')^{\beta-1}d\mu'
+\end{align}
+
+$$\therefore \int_0^1 \mu^{\alpha - 1}(1-\mu)^{\beta-1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}$$
+
+Then proof is finish.
+
+------------------------------------------------------------------------
+**Property 5.1.7 - Representative values of Beta distribution **
+
+Let $\text{Beta}(\mu | \alpha, \beta)$ be a given Beta distribution, then
+$$\begin{aligned}
+\mathbb{E}[\mu] &= \frac{\alpha}{\alpha + \beta} \\
+\text{var}[\mu] &= \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)} \\
+\text{mode}[\mu] &= \frac{\alpha - 1}{\alpha + \beta - 2}
+\end{aligned}$$
+------------------------------------------------------------------------
+
+**Proof for prop 5.1.7**
+
+First, let's see expectation value.
+\begin{align}
+    \mathbb{E}[\mu] &= \int_0^1 \mu \cdot \text{Beta}(\mu|\alpha, \beta)d\mu \\
+    &= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \int_0^1 \mu \cdot \mu^{\alpha - 1}(1 - \mu)^{\beta - 1} d\mu \\
+    &= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \int_0^1 \mu^{\alpha}(1-\mu)^{\beta-1}d\mu \\
+    &= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \cdot \frac{\Gamma(\alpha + 1)\Gamma(\beta)}{\Gamma(\alpha + \beta + 1)} \\
+    &= \frac{\alpha}{\alpha + \beta}
+\end{align}
+
+Next, see variation.
+\begin{align}
+    \text{var}[\mu] &= \int_0^1 \mu^2 \cdot \text{Beta}(\mu | \alpha, \beta)d\mu - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
+    &= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \cdot \frac{\Gamma(\alpha + 2)\Gamma(\beta)}{\Gamma(\alpha + \beta + 2)} - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
+    &= \frac{\alpha(\alpha + 1)}{(\alpha + \beta)(\alpha + \beta + 1)} - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
+    &= \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}
+\end{align}
+
+Before viewing mode, we should differentiate Beta distribution under specific condition. $(\alpha, \beta > 1)$.
+$$\frac{\partial}{\partial \mu}\text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \left((\alpha- 1) \mu^{\alpha - 2}(1 - \mu)^{\beta - 1} - (\beta - 1)\mu^{\alpha - 1}(1 - \mu)^{\beta - 2} \right)$$
+
+Thus, we can find value of $\mu$ directly.
+\begin{align}
+    &(\alpha - 1)(1 - \mu) - (\beta - 1)\mu = 0 \\
+    \Rightarrow ~ &\mu = \frac{\alpha - 1}{\alpha + \beta - 2}
+\end{align}
