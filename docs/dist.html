@@ -25,7 +25,7 @@
 <meta name="author" content="Tae Geun Kim">
 
 
-<meta name="date" content="2019-02-09">
+<meta name="date" content="2019-03-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -169,14 +169,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="dist" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Probability Distributions</h1>
 <p>이 단원에서는 실제로 많이 쓰이는 확률 분포 몇 개와 그 성질들을 간략히 요약하고자 합니다.
-결과는 모두 <span class="citation">(Bishop <a href="#ref-bishop_2006">2006</a>)</span>의 Appendix B에 있으니 참고하시길 바랍니다.
+확률 분포에 대한 이론적 설명은 모두 <span class="citation">(Bishop <a href="#ref-bishop_2006" role="doc-biblioref">2006</a>)</span>의 Appendix B에 있으며 각 분포 별 표본 추출은 <span class="citation">(Lemieux <a href="#ref-lemiux2009" role="doc-biblioref">2009</a>)</span>를 참고하였습니다.
 과정은 대개 다음과 같이 이루어질 것입니다.</p>
 <ul>
 <li>확률 분포 정의</li>
 <li>대푯값(Representative value) 계산</li>
 <li>최대가능도추정(Maximally Likelihood Estimation)</li>
 <li>Bayesian Update</li>
-<li>Random number generator (Programming)</li>
+<li>Random number generator (Algorithm &amp; Programming with Rust)</li>
 </ul>
 <p>편의상 증명은 대부분 영어로 진행하겠습니다.</p>
 <div id="binary-variables" class="section level2">
@@ -192,10 +192,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left"><strong>Definition 5.1.1 - Bernoulli distribution</strong></td>
 </tr>
 <tr class="even">
-<td align="left">Let consider a single binary random variable <span class="math inline">\(x\in\{0,1\}\)</span>.
-Suppose the probability of <span class="math inline">\(x=1\)</span> is given as <span class="math inline">\(p(x=1|\mu) = \mu\)</span> where
-<span class="math inline">\(0\leq \mu \leq 1\)</span> then
-<span class="math display">\[\text{Bern}(x|\mu) = \mu^x(1 - \mu)^{1-x}\]</span>
+<td align="left">Let consider a single binary random variable <span class="math inline">\(\small x\in\{0,1\}\)</span>.
+Suppose the probability of <span class="math inline">\(\small x=1\)</span> is given as <span class="math inline">\(\small p(x=1|\mu) = \mu\)</span> where
+<span class="math inline">\(\small 0\leq \mu \leq 1\)</span> then
+<span class="math display">\[\small\text{Bern}(x|\mu) = \mu^x(1 - \mu)^{1-x}\]</span>
 is called <strong>Bernoulli distribution</strong>.</td>
 </tr>
 </tbody>
@@ -206,14 +206,14 @@ is called <strong>Bernoulli distribution</strong>.</td>
 </colgroup>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Property 5.1.2 - Representative values of Bernouli distribution </strong></td>
+<td align="left"><strong>Property 5.1.2 - Representative values of Bernouli distribution</strong></td>
 </tr>
 <tr class="even">
-<td align="left">Let <span class="math inline">\(\text{Bern}(x|\mu)\)</span> be given Bernoulli distribution. Then
-<span class="math display">\[\begin{align}
+<td align="left">Let <span class="math inline">\(\small\text{Bern}(x|\mu)\)</span> be given Bernoulli distribution. Then
+<span class="math display">\[\small\begin{aligned}
 \mathbb{E}[x] &amp;= \mu \\
 \text{var}[x] &amp;= \mu(1-\mu)
-\end{align}\]</span></td>
+\end{aligned}\]</span></td>
 </tr>
 </tbody>
 </table>
@@ -223,28 +223,28 @@ is called <strong>Bernoulli distribution</strong>.</td>
 </colgroup>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Theorem 5.1.3 - MLE for Bernoulli distribution </strong></td>
+<td align="left"><strong>Theorem 5.1.3 - MLE for Bernoulli distribution</strong></td>
 </tr>
 <tr class="even">
-<td align="left">Let <span class="math inline">\(\mathcal{D} = \{x_1, \cdots, x_N\}\)</span> be <em>i.i.d</em> data belong to
-<span class="math inline">\(\text{Bern}(x|\mu)\)</span>. Applying maximally likelihood estimation, then
-<span class="math display">\[\mu_{ML} = \frac{1}{N}\sum_{i=1}^N x_n \]</span></td>
+<td align="left">Let <span class="math inline">\(\small\mathcal{D} = \{x_1, \cdots, x_N\}\)</span> be <em>i.i.d</em> data belong to
+<span class="math inline">\(\small\text{Bern}(x|\mu)\)</span>. Applying maximally likelihood estimation, then
+<span class="math display">\[\small\mu_{ML} = \frac{1}{N}\sum_{i=1}^N x_n \]</span></td>
 </tr>
 </tbody>
 </table>
 <p><strong>Proof for Thm 5.1.3</strong></p>
 <p>Since there is <em>i.i.d</em> assumption, the likelihood given as
-<span class="math display">\[p(\mathcal{D}|\mu) = \prod_{n=1}^N p(x_n | \mu) = \prod_{n=1}^N \mu^{x_n} (1 - \mu)^{1-x_n}\]</span>
+<span class="math display">\[\small p(\mathcal{D}|\mu) = \prod_{n=1}^N p(x_n | \mu) = \prod_{n=1}^N \mu^{x_n} (1 - \mu)^{1-x_n}\]</span>
 For convenience, let’s obtain log likelihood.
-<span class="math display">\[\begin{align}
+<span class="math display">\[\small\begin{aligned}
     \ln p(\mathcal{D}| \mu) = \sum_{n=1}^N \ln p(x_n | \mu) &amp;= \sum_{n=1}^N \left\{x_n \ln \mu + (1-x_n)\ln(1-\mu) \right\}\\
     &amp;= \ln \mu \sum_{n=1}^N x_n + \ln(1-\mu) \sum_{n=1}^N (1-x_n) \\
     &amp;= (\ln\mu - \ln(1-\mu))\sum_{n=1}^N x_n + N \ln(1-\mu)
-\end{align}\]</span>
+\end{aligned}\]</span>
 Then for MLE, let’s differentiate log likelihood with <span class="math inline">\(\mu\)</span>.
-<span class="math display">\[\frac{\partial}{\partial \mu}\ln p(\mathcal{D}|\mu) = \frac{1}{\mu}\sum_{n=1}^N x_n - \frac{1}{1-\mu}\sum_{n=1}^N (1 - x_n) = 0\]</span>
-Therefore we can find <span class="math inline">\(\mu_{ML}\)</span>.
-<span class="math display">\[\therefore\,\mu_{ML} = \frac{1}{N}\sum_{n=1}^N x_n\]</span></p>
+<span class="math display">\[\small\frac{\partial}{\partial \mu}\ln p(\mathcal{D}|\mu) = \frac{1}{\mu}\sum_{n=1}^N x_n - \frac{1}{1-\mu}\sum_{n=1}^N (1 - x_n) = 0\]</span>
+Therefore we can find <span class="math inline">\(\small \mu_{ML}\)</span>.
+<span class="math display">\[\small\therefore\,\mu_{ML} = \frac{1}{N}\sum_{n=1}^N x_n\]</span></p>
 <p>이번에는 균등 분포(Uniform distribution)로 부터 베르누이 분포를 구현해보도록 하겠습니다.</p>
 <table>
 <colgroup>
@@ -252,19 +252,19 @@ Therefore we can find <span class="math inline">\(\mu_{ML}\)</span>.
 </colgroup>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Algorithm 5.1.4 - Uniform to Bernoulli </strong></td>
+<td align="left"><strong>Algorithm 5.1.4 - Uniform to Bernoulli</strong></td>
 </tr>
 <tr class="even">
-<td align="left">We want to generate <span class="math inline">\(X \sim \text{Bern}(x | \mu)\)</span>. <br/>
-1. Generate <span class="math inline">\(U \sim \text{Unif}(0,1)\)</span> <br/>
-2. If <span class="math inline">\(U \leq \mu\)</span> where <span class="math inline">\(\mu \in [0, 1]\)</span> then <span class="math inline">\(X = 1\)</span> else <span class="math inline">\(X = 0\)</span>.</td>
+<td align="left">We want to generate <span class="math inline">\(\small X \sim \text{Bern}(x | \mu)\)</span>. <br/>
+1. Generate <span class="math inline">\(\small U \sim \text{Unif}(0,1)\)</span> <br/>
+2. If <span class="math inline">\(\small U \leq \mu\)</span> where <span class="math inline">\(\mu \in [0, 1]\)</span> then <span class="math inline">\(X = 1\)</span> else <span class="math inline">\(X = 0\)</span>.</td>
 </tr>
 </tbody>
 </table>
 <p>이 간단한 알고리즘을 Rust를 이용해서 나타내면 다음과 같습니다.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">// Generate 100 samples of Bern(x|0.1)</span>
 <span class="kw">extern</span> <span class="kw">crate</span> rand;
-<span class="kw">use</span> <span class="pp">rand::prelude::</span>*;
+<span class="kw">use</span> <span class="kw">self</span>::<span class="pp">rand::prelude::</span>*;
 
 <span class="kw">fn</span> main() <span class="op">{</span>
     <span class="kw">let</span> sample_size = <span class="dv">100</span>;
@@ -301,13 +301,13 @@ Therefore we can find <span class="math inline">\(\mu_{ML}\)</span>.
 </colgroup>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Definition 5.1.5 - Beta Distribution </strong></td>
+<td align="left"><strong>Definition 5.1.5 - Beta Distribution</strong></td>
 </tr>
 <tr class="even">
 <td align="left"><strong>The Beta distribution</strong> is a family of continuous probability distributions
-defined on the interval <span class="math inline">\([0, 1]\)</span> parametrized by two positive shape parameters,
-denoted by <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> :
-<span class="math display">\[\text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \mu^{\alpha-1}(1-\mu)^{\beta - 1}\]</span></td>
+defined on the interval <span class="math inline">\(\small[0, 1]\)</span> parametrized by two positive shape parameters,
+denoted by <span class="math inline">\(\small\alpha\)</span> and <span class="math inline">\(\small\beta\)</span> :
+<span class="math display">\[\small \text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \mu^{\alpha-1}(1-\mu)^{\beta - 1}\]</span></td>
 </tr>
 </tbody>
 </table>
@@ -317,31 +317,31 @@ denoted by <span class="math inline">\(\alpha\)</span> and <span class="math inl
 </colgroup>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Property 5.1.6 - Normalization of Beta distribution </strong></td>
+<td align="left"><strong>Property 5.1.6 - Normalization of Beta distribution</strong></td>
 </tr>
 <tr class="even">
-<td align="left"><span class="math display">\[\int_0^1 \text{Beta}(\mu | \alpha, \beta) d\mu = 1\]</span></td>
+<td align="left"><span class="math display">\[\small \int_0^1 \text{Beta}(\mu | \alpha, \beta) d\mu = 1\]</span></td>
 </tr>
 </tbody>
 </table>
 <p><strong>Proof for Prop 5.1.6</strong></p>
 <p>To prove this, we should show next relation.
-<span class="math display">\[\int_0^1 \mu^{\alpha - 1}(1 - \mu)^{\beta - 1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\]</span>
+<span class="math display">\[\small \int_0^1 \mu^{\alpha - 1}(1 - \mu)^{\beta - 1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\]</span>
 Then let’s start proof.
-<span class="math display">\[\begin{align}
+<span class="math display">\[\small\begin{aligned}
     \Gamma(\alpha)\Gamma(\beta) &amp;= \int_0^\infty \mu^{\alpha - 1}e^{-\mu}d\mu \int_0^\infty \nu^{\beta - 1}e^{-\nu}d\nu \\
     &amp;= \int_0^\infty \int_0^\infty \mu^{\alpha - 1}\nu^{\beta-1}e^{-(\mu + \nu)} d\mu d\nu \\
     &amp;= \int_0^\infty \left(\int_\mu^\infty \mu^{\alpha-1}(t-\mu)^{\beta - 1} e^{-t} dt\right)d\mu \\
-\end{align}\]</span></p>
+\end{aligned}\]</span></p>
 <p>For last line of above equations, I used the substitution <span class="math inline">\(t = \mu + \nu,~ dt = d\nu\)</span>.
 Next, let change order of integration.
-<span class="math display">\[\begin{align}
+<span class="math display">\[\small\begin{aligned}
     \Gamma(\alpha)\Gamma(\beta) &amp;= \int_0^\infty \left(\int_0^t \mu^{\alpha-1}(t-\mu)^{\beta-1}d\mu\right)e^{-t}dt \\
     &amp;= \int_0^\infty \left(\int_0^1 (t\mu&#39;)^{\alpha-1}t^{\beta-1}(1-\mu&#39;)^{\beta-1}t d\mu&#39;\right)e^{-t}dt \\
     &amp;= \int_0^\infty \left(\int_0^1 t^{\alpha + \beta - 1} \mu&#39;^{\alpha-1} (1- \mu&#39;)^{\beta-1} d\mu&#39;\right)e^{-t}dt \\
     &amp;= \int_0^\infty t^{\alpha + \beta - 1} e^{-t}dt \cdot \int_0^1 \mu&#39;^{\alpha-1}(1-\mu&#39;)^{\beta-1}d\mu&#39;
-\end{align}\]</span></p>
-<p><span class="math display">\[\therefore \int_0^1 \mu^{\alpha - 1}(1-\mu)^{\beta-1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\]</span></p>
+\end{aligned}\]</span></p>
+<p><span class="math display">\[\small\therefore \int_{0}^1 \mu^{\alpha - 1}(1-\mu)^{\beta-1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}\]</span></p>
 <p>Then proof is finish.</p>
 <table>
 <colgroup>
@@ -349,11 +349,11 @@ Next, let change order of integration.
 </colgroup>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Property 5.1.7 - Representative values of Beta distribution </strong></td>
+<td align="left"><strong>Property 5.1.7 - Representative values of Beta distribution</strong></td>
 </tr>
 <tr class="even">
-<td align="left">Let <span class="math inline">\(\text{Beta}(\mu | \alpha, \beta)\)</span> be a given Beta distribution, then
-<span class="math display">\[\begin{aligned}
+<td align="left">Let <span class="math inline">\(\small\text{Beta}(\mu | \alpha, \beta)\)</span> be a given Beta distribution, then
+<span class="math display">\[\small\begin{aligned}
 \mathbb{E}[\mu] &amp;= \frac{\alpha}{\alpha + \beta} \\
 \text{var}[\mu] &amp;= \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)} \\
 \text{mode}[\mu] &amp;= \frac{\alpha - 1}{\alpha + \beta - 2}
@@ -363,27 +363,115 @@ Next, let change order of integration.
 </table>
 <p><strong>Proof for prop 5.1.7</strong></p>
 <p>First, let’s see expectation value.
-<span class="math display">\[\begin{align}
+<span class="math display">\[\small\begin{aligned}
     \mathbb{E}[\mu] &amp;= \int_0^1 \mu \cdot \text{Beta}(\mu|\alpha, \beta)d\mu \\
     &amp;= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \int_0^1 \mu \cdot \mu^{\alpha - 1}(1 - \mu)^{\beta - 1} d\mu \\
     &amp;= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \int_0^1 \mu^{\alpha}(1-\mu)^{\beta-1}d\mu \\
     &amp;= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \cdot \frac{\Gamma(\alpha + 1)\Gamma(\beta)}{\Gamma(\alpha + \beta + 1)} \\
     &amp;= \frac{\alpha}{\alpha + \beta}
-\end{align}\]</span></p>
+\end{aligned}\]</span></p>
 <p>Next, see variation.
-<span class="math display">\[\begin{align}
+<span class="math display">\[\small\begin{aligned}
     \text{var}[\mu] &amp;= \int_0^1 \mu^2 \cdot \text{Beta}(\mu | \alpha, \beta)d\mu - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
     &amp;= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \cdot \frac{\Gamma(\alpha + 2)\Gamma(\beta)}{\Gamma(\alpha + \beta + 2)} - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
     &amp;= \frac{\alpha(\alpha + 1)}{(\alpha + \beta)(\alpha + \beta + 1)} - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
     &amp;= \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}
-\end{align}\]</span></p>
-<p>Before viewing mode, we should differentiate Beta distribution under specific condition. <span class="math inline">\((\alpha, \beta &gt; 1)\)</span>.
-<span class="math display">\[\frac{\partial}{\partial \mu}\text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \left((\alpha- 1) \mu^{\alpha - 2}(1 - \mu)^{\beta - 1} - (\beta - 1)\mu^{\alpha - 1}(1 - \mu)^{\beta - 2} \right)\]</span></p>
+\end{aligned}\]</span></p>
+<p>Before viewing mode, we should differentiate Beta distribution under specific condition. <span class="math inline">\(\small(\alpha, \beta &gt; 1)\)</span>.
+<span class="math display">\[\small \frac{\partial}{\partial \mu}\text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \left((\alpha- 1) \mu^{\alpha - 2}(1 - \mu)^{\beta - 1} - (\beta - 1)\mu^{\alpha - 1}(1 - \mu)^{\beta - 2} \right)\]</span></p>
 <p>Thus, we can find value of <span class="math inline">\(\mu\)</span> directly.
-<span class="math display">\[\begin{align}
+<span class="math display">\[\small\begin{aligned}
     &amp;(\alpha - 1)(1 - \mu) - (\beta - 1)\mu = 0 \\
     \Rightarrow ~ &amp;\mu = \frac{\alpha - 1}{\alpha + \beta - 2}
-\end{align}\]</span></p>
+\end{aligned}\]</span></p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Algorithm 5.1.8 - Acceptance Rejection Method</strong></td>
+</tr>
+<tr class="even">
+<td align="left">For given pdf <span class="math inline">\(\small \varphi(x)\)</span> which is defined on <span class="math inline">\(\small \mathcal{D}\)</span>, let <span class="math inline">\(\small t(x)\)</span> be a function
+such that <span class="math inline">\(\small t(x) \geq \varphi(x), ~\forall x \in \mathcal{D}\)</span> with next property:
+<span class="math display">\[\small T = \int_{\mathcal{D}} t(x) dx \geq  \int_{\mathcal{D}} \varphi(x) dx = 1\]</span>
+Since <span class="math inline">\(\displaystyle\small r(x) \equiv \frac{t(x)}{T}\)</span> is density function, we generate <span class="math inline">\(\small r(x)\)</span> instead of <span class="math inline">\(\small t(x)\)</span> with following procedure:<br/>
+1. Generate <span class="math inline">\(\small Y\)</span> having density <span class="math inline">\(\small r(x)\)</span>.<br/>
+2. Generate <span class="math inline">\(\small U \sim \text{Unif}(0,1)\)</span>, independent of <span class="math inline">\(\small Y\)</span>.<br/>
+3. If <span class="math inline">\(\displaystyle \small U \leq \frac{\varphi(Y)}{t(Y)}\)</span>, then return <span class="math inline">\(\small X=Y\)</span>; otherwise go back to step 1.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Proof for Algorithm 5.1.8</strong></p>
+<p>Through above 3 steps, we can generate the pair <span class="math inline">\(\small (Y,U)\)</span>.
+To be accepted, a pair must satisfy <span class="math inline">\(\displaystyle\small U \leq \frac{\varphi(Y)}{t(Y)}\)</span>.
+Thus, pdf of <span class="math inline">\(\small X\)</span> is equivalent to pdf of <span class="math inline">\(\small(Y|U \leq \varphi(Y) / t(Y))\)</span>. Therefore,</p>
+<p><span class="math display">\[\small P(X\leq x) = P\left(Y\leq x \left\lvert U\leq  \frac{\varphi(Y)}{t(Y)}\right.\right) = \frac{P(Y\leq x, U\leq\varphi(Y)/t(Y))}{P(U\leq \varphi(Y)/t(Y))}\]</span></p>
+<p>And we can find what the RHS is.</p>
+<p><span class="math display">\[\small \begin{aligned}
+  P\left(Y\leq x, U\leq \frac{\varphi(Y)}{t(Y)}\right) &amp;= \int_{-\infty}^{x} P\left( U \leq \frac{\varphi(y)}{t(y)}\right) r(y) dy = \int_{-\infty}^{x} \frac{\varphi(y)}{t(y)}r(y) dy \\
+  &amp;= \frac{1}{T}\int_{-\infty}^x \varphi(y) dy = \frac{F(x)}{T}
+  \end{aligned}\]</span></p>
+<p><span class="math display">\[\small P\left(U \leq \frac{\varphi(Y)}{t(Y)} \right) = \int_{-\infty}^{\infty} \frac{\varphi(y)}{t(y)}r(y) dy = \frac{1}{T}\]</span></p>
+<p>Therefore the CDF of <span class="math inline">\(\small X\)</span> becomes <span class="math inline">\(\small F(x)\)</span> which is CDF corresponding to <span class="math inline">\(\small \varphi(x)\)</span>.</p>
+<p><br/></p>
+<p>이제 증명도 마쳤으니 이 알고리즘을 구현해봅시다.</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">extern</span> <span class="kw">crate</span> rand;
+<span class="kw">extern</span> <span class="kw">crate</span> peroxide;
+
+<span class="kw">use</span> <span class="pp">rand::prelude::</span>*                   <span class="co">// For RNG</span>
+<span class="kw">use</span> <span class="pp">peroxide::special::function::</span>beta; <span class="co">// For Beta function</span>
+
+<span class="kw">fn</span> main() <span class="op">{</span>
+    <span class="co">// For Beta(x | 3, 2)</span>
+    <span class="kw">let</span> a = <span class="dv">3f64</span>;
+    <span class="kw">let</span> b = <span class="dv">2f64</span>;
+    <span class="kw">let</span> n = <span class="dv">100usize</span>; <span class="co">// For 100 samples</span>
+    
+    <span class="co">// Two independent RNG</span>
+    <span class="kw">let</span> <span class="kw">mut</span> rng1 = thread_rng();
+    <span class="kw">let</span> <span class="kw">mut</span> rng2 = thread_rng();
+    
+    <span class="kw">let</span> <span class="kw">mut</span> result = <span class="pp">vec!</span><span class="op">[</span><span class="dv">0f64</span>; n<span class="op">]</span>;
+    <span class="kw">let</span> <span class="kw">mut</span> iter_num = <span class="dv">0usize</span>;
+
+    <span class="co">// To construct t(x) -&gt; t(x) = T (constant function)</span>
+    <span class="co">// T &gt;= φ(x), ∀x ∈ D =&gt; T = mode</span>
+    <span class="co">// r(x) = t(x)/T = 1  ~ Unif(0,1)</span>
+    <span class="kw">let</span> mode_x = (a - <span class="dv">1f64</span>) / (a + b - <span class="dv">2f64</span>);
+    <span class="kw">let</span> mode = beta_pdf(mode_x); 
+
+    <span class="kw">while</span> iter_num &lt; n <span class="op">{</span>
+        <span class="co">// 1. Y ~ Unif(0, 1)</span>
+        <span class="kw">let</span> u1 = rng1.gen_range(<span class="dv">0f64</span>, <span class="dv">1f64</span>);
+
+        <span class="co">// 2. U ~ Unif(0, 1)</span>
+        <span class="kw">let</span> u2 = rng2.gen_range(<span class="dv">0f64</span>, <span class="dv">1f64</span>);
+
+        <span class="co">// 3. U &lt;= varphi(Y) / t(Y) </span>
+        <span class="kw">if</span> u2 &lt;= beta_pdf(u1) / c <span class="op">{</span>
+            v<span class="op">[</span>iter_num<span class="op">]</span> = u1;
+            iter_num += <span class="dv">1</span>;
+        <span class="op">}</span>
+    <span class="op">}</span>
+    <span class="pp">println!</span>(<span class="st">&quot;{:?}&quot;</span>, v);
+<span class="op">}</span>
+
+<span class="kw">fn</span> beta_pdf(x: <span class="dt">f64</span>, a: <span class="dt">f64</span>, b: <span class="dt">f64</span>) -&gt; <span class="dt">f64</span> <span class="op">{</span>
+    <span class="dv">1f64</span> / beta(a, b)
+        * x.powf(a - <span class="dv">1f64</span>)
+        * (<span class="dv">1f64</span> - x).powf(b - <span class="dv">1f64</span>)
+<span class="op">}</span></code></pre>
+<p>다음은 <code>Peroxide</code> 라이브러리에서의 위와 동일한 코드 사용법 입니다.
+(내부 구현도 동일합니다.)</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">extern</span> <span class="kw">crate</span> peroxide;
+<span class="kw">use</span> <span class="pp">peroxide::</span>*;
+
+<span class="kw">fn</span> main() <span class="op">{</span>
+    <span class="kw">let</span> beta = Beta(<span class="dv">3</span>, <span class="dv">2</span>);
+    beta.sample(<span class="dv">100</span>).print();
+<span class="op">}</span></code></pre>
 
 </div>
 </div>
@@ -392,6 +480,9 @@ Next, let change order of integration.
 <div id="refs" class="references">
 <div id="ref-bishop_2006">
 <p>Bishop, Christopher M. 2006. <em>Pattern Recognition and Machine Learning</em>. Springer. <a href="https://www.springer.com/kr/book/9780387310732">https://www.springer.com/kr/book/9780387310732</a>.</p>
+</div>
+<div id="ref-lemiux2009">
+<p>Lemieux, Christiane. 2009. <em>Monte Carlo and Quasi-Monte Carlo Sampling</em>. 1st ed. Springer Series in Statistics. Springer-Verlag New York. <a href="https://www.springer.com/us/book/9780387781648">https://www.springer.com/us/book/9780387781648</a>.</p>
 </div>
 </div>
             </section>

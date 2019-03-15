@@ -1,14 +1,14 @@
 # Probability Distributions {#dist}
 
 이 단원에서는 실제로 많이 쓰이는 확률 분포 몇 개와 그 성질들을 간략히 요약하고자 합니다.
-결과는 모두 [@bishop_2006]의 Appendix B에 있으니 참고하시길 바랍니다.
+확률 분포에 대한 이론적 설명은 모두 [@bishop_2006]의 Appendix B에 있으며 각 분포 별 표본 추출은 [@lemiux2009]를 참고하였습니다.
 과정은 대개 다음과 같이 이루어질 것입니다.
 
 * 확률 분포 정의
 * 대푯값(Representative value) 계산
 * 최대가능도추정(Maximally Likelihood Estimation)
 * Bayesian Update
-* Random number generator (Programming)
+* Random number generator (Algorithm & Programming with Rust)
 
 편의상 증명은 대부분 영어로 진행하겠습니다.
 
@@ -19,54 +19,54 @@
 ------------------------------------------------------------------------
 **Definition 5.1.1 - Bernoulli distribution**
 
-Let consider a single binary random variable $x\in\{0,1\}$.
-Suppose the probability of $x=1$ is given as $p(x=1|\mu) = \mu$ where
-$0\leq \mu \leq 1$ then
-$$\text{Bern}(x|\mu) = \mu^x(1 - \mu)^{1-x}$$
+Let consider a single binary random variable $\small x\in\{0,1\}$.
+Suppose the probability of $\small x=1$ is given as $\small p(x=1|\mu) = \mu$ where
+$\small 0\leq \mu \leq 1$ then
+$$\small\text{Bern}(x|\mu) = \mu^x(1 - \mu)^{1-x}$$
 is called **Bernoulli distribution**.
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
-**Property 5.1.2 - Representative values of Bernouli distribution **
+**Property 5.1.2 - Representative values of Bernouli distribution**
 
-Let $\text{Bern}(x|\mu)$ be given Bernoulli distribution. Then
-$$\begin{align}
+Let $\small\text{Bern}(x|\mu)$ be given Bernoulli distribution. Then
+$$\small\begin{aligned}
     \mathbb{E}[x] &= \mu \\
     \text{var}[x] &= \mu(1-\mu)
-\end{align}$$
+\end{aligned}$$
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
-**Theorem 5.1.3 - MLE for Bernoulli distribution **
+**Theorem 5.1.3 - MLE for Bernoulli distribution**
 
-Let $\mathcal{D} = \{x_1, \cdots, x_N\}$ be *i.i.d* data belong to
-$\text{Bern}(x|\mu)$. Applying maximally likelihood estimation, then
-$$\mu_{ML} = \frac{1}{N}\sum_{i=1}^N x_n $$
+Let $\small\mathcal{D} = \{x_1, \cdots, x_N\}$ be *i.i.d* data belong to
+$\small\text{Bern}(x|\mu)$. Applying maximally likelihood estimation, then
+$$\small\mu_{ML} = \frac{1}{N}\sum_{i=1}^N x_n $$
 ------------------------------------------------------------------------
 
 **Proof for Thm 5.1.3**
 
 Since there is *i.i.d* assumption, the likelihood given as
-$$p(\mathcal{D}|\mu) = \prod_{n=1}^N p(x_n | \mu) = \prod_{n=1}^N \mu^{x_n} (1 - \mu)^{1-x_n}$$
+$$\small p(\mathcal{D}|\mu) = \prod_{n=1}^N p(x_n | \mu) = \prod_{n=1}^N \mu^{x_n} (1 - \mu)^{1-x_n}$$
 For convenience, let's obtain log likelihood.
-$$\begin{align}
+$$\small\begin{aligned}
     \ln p(\mathcal{D}| \mu) = \sum_{n=1}^N \ln p(x_n | \mu) &= \sum_{n=1}^N \left\{x_n \ln \mu + (1-x_n)\ln(1-\mu) \right\}\\
     &= \ln \mu \sum_{n=1}^N x_n + \ln(1-\mu) \sum_{n=1}^N (1-x_n) \\
     &= (\ln\mu - \ln(1-\mu))\sum_{n=1}^N x_n + N \ln(1-\mu)
-\end{align}$$
+\end{aligned}$$
 Then for MLE, let's differentiate log likelihood with $\mu$.
-$$\frac{\partial}{\partial \mu}\ln p(\mathcal{D}|\mu) = \frac{1}{\mu}\sum_{n=1}^N x_n - \frac{1}{1-\mu}\sum_{n=1}^N (1 - x_n) = 0$$
-Therefore we can find $\mu_{ML}$.
-$$\therefore\,\mu_{ML} = \frac{1}{N}\sum_{n=1}^N x_n$$
+$$\small\frac{\partial}{\partial \mu}\ln p(\mathcal{D}|\mu) = \frac{1}{\mu}\sum_{n=1}^N x_n - \frac{1}{1-\mu}\sum_{n=1}^N (1 - x_n) = 0$$
+Therefore we can find $\small \mu_{ML}$.
+$$\small\therefore\,\mu_{ML} = \frac{1}{N}\sum_{n=1}^N x_n$$
 
 이번에는 균등 분포(Uniform distribution)로 부터 베르누이 분포를 구현해보도록 하겠습니다.
 
 ------------------------------------------------------------------------
-**Algorithm 5.1.4 - Uniform to Bernoulli **
+**Algorithm 5.1.4 - Uniform to Bernoulli**
 
-We want to generate $X \sim \text{Bern}(x | \mu)$. <br/>
-1. Generate $U \sim \text{Unif}(0,1)$ <br/>
-2. If $U \leq \mu$ where $\mu \in [0, 1]$ then $X = 1$ else $X = 0$.
+We want to generate $\small X \sim \text{Bern}(x | \mu)$. <br/>
+1. Generate $\small U \sim \text{Unif}(0,1)$ <br/>
+2. If $\small U \leq \mu$ where $\mu \in [0, 1]$ then $X = 1$ else $X = 0$.
 ------------------------------------------------------------------------
 
 이 간단한 알고리즘을 Rust를 이용해서 나타내면 다음과 같습니다.
@@ -74,7 +74,7 @@ We want to generate $X \sim \text{Bern}(x | \mu)$. <br/>
 ```rust
 // Generate 100 samples of Bern(x|0.1)
 extern crate rand;
-use rand::prelude::*;
+use self::rand::prelude::*;
 
 fn main() {
     let sample_size = 100;
@@ -111,49 +111,49 @@ fn main() {
 ### Beta Distribution
 
 ------------------------------------------------------------------------
-**Definition 5.1.5 - Beta Distribution **
+**Definition 5.1.5 - Beta Distribution**
 
 **The Beta distribution** is a family of continuous probability distributions
-defined on the interval $[0, 1]$ parametrized by two positive shape parameters,
-denoted by $\alpha$ and $\beta$ :
-$$\text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \mu^{\alpha-1}(1-\mu)^{\beta - 1}$$
+defined on the interval $\small[0, 1]$ parametrized by two positive shape parameters,
+denoted by $\small\alpha$ and $\small\beta$ :
+$$\small \text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \mu^{\alpha-1}(1-\mu)^{\beta - 1}$$
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
-**Property 5.1.6 - Normalization of Beta distribution **
+**Property 5.1.6 - Normalization of Beta distribution**
 
-$$\int_0^1 \text{Beta}(\mu | \alpha, \beta) d\mu = 1$$
+$$\small \int_0^1 \text{Beta}(\mu | \alpha, \beta) d\mu = 1$$
 ------------------------------------------------------------------------
 
 **Proof for Prop 5.1.6**
 
 To prove this, we should show next relation.
-$$\int_0^1 \mu^{\alpha - 1}(1 - \mu)^{\beta - 1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}$$
+$$\small \int_0^1 \mu^{\alpha - 1}(1 - \mu)^{\beta - 1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}$$
 Then let's start proof.
-\begin{align}
+$$\small\begin{aligned}
     \Gamma(\alpha)\Gamma(\beta) &= \int_0^\infty \mu^{\alpha - 1}e^{-\mu}d\mu \int_0^\infty \nu^{\beta - 1}e^{-\nu}d\nu \\
     &= \int_0^\infty \int_0^\infty \mu^{\alpha - 1}\nu^{\beta-1}e^{-(\mu + \nu)} d\mu d\nu \\
     &= \int_0^\infty \left(\int_\mu^\infty \mu^{\alpha-1}(t-\mu)^{\beta - 1} e^{-t} dt\right)d\mu \\
-\end{align}
+\end{aligned}$$
 
 For last line of above equations, I used the substitution $t = \mu + \nu,~ dt = d\nu$.
 Next, let change order of integration.
-\begin{align}
+$$\small\begin{aligned}
     \Gamma(\alpha)\Gamma(\beta) &= \int_0^\infty \left(\int_0^t \mu^{\alpha-1}(t-\mu)^{\beta-1}d\mu\right)e^{-t}dt \\
     &= \int_0^\infty \left(\int_0^1 (t\mu')^{\alpha-1}t^{\beta-1}(1-\mu')^{\beta-1}t d\mu'\right)e^{-t}dt \\
     &= \int_0^\infty \left(\int_0^1 t^{\alpha + \beta - 1} \mu'^{\alpha-1} (1- \mu')^{\beta-1} d\mu'\right)e^{-t}dt \\
     &= \int_0^\infty t^{\alpha + \beta - 1} e^{-t}dt \cdot \int_0^1 \mu'^{\alpha-1}(1-\mu')^{\beta-1}d\mu'
-\end{align}
+\end{aligned}$$
 
-$$\therefore \int_0^1 \mu^{\alpha - 1}(1-\mu)^{\beta-1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}$$
+$$\small\therefore \int_{0}^1 \mu^{\alpha - 1}(1-\mu)^{\beta-1}d\mu = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}$$
 
 Then proof is finish.
 
 ------------------------------------------------------------------------
-**Property 5.1.7 - Representative values of Beta distribution **
+**Property 5.1.7 - Representative values of Beta distribution**
 
-Let $\text{Beta}(\mu | \alpha, \beta)$ be a given Beta distribution, then
-$$\begin{aligned}
+Let $\small\text{Beta}(\mu | \alpha, \beta)$ be a given Beta distribution, then
+$$\small\begin{aligned}
 \mathbb{E}[\mu] &= \frac{\alpha}{\alpha + \beta} \\
 \text{var}[\mu] &= \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)} \\
 \text{mode}[\mu] &= \frac{\alpha - 1}{\alpha + \beta - 2}
@@ -163,27 +163,125 @@ $$\begin{aligned}
 **Proof for prop 5.1.7**
 
 First, let's see expectation value.
-\begin{align}
+$$\small\begin{aligned}
     \mathbb{E}[\mu] &= \int_0^1 \mu \cdot \text{Beta}(\mu|\alpha, \beta)d\mu \\
     &= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \int_0^1 \mu \cdot \mu^{\alpha - 1}(1 - \mu)^{\beta - 1} d\mu \\
     &= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \int_0^1 \mu^{\alpha}(1-\mu)^{\beta-1}d\mu \\
     &= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \cdot \frac{\Gamma(\alpha + 1)\Gamma(\beta)}{\Gamma(\alpha + \beta + 1)} \\
     &= \frac{\alpha}{\alpha + \beta}
-\end{align}
+\end{aligned}$$
 
 Next, see variation.
-\begin{align}
+$$\small\begin{aligned}
     \text{var}[\mu] &= \int_0^1 \mu^2 \cdot \text{Beta}(\mu | \alpha, \beta)d\mu - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
     &= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \cdot \frac{\Gamma(\alpha + 2)\Gamma(\beta)}{\Gamma(\alpha + \beta + 2)} - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
     &= \frac{\alpha(\alpha + 1)}{(\alpha + \beta)(\alpha + \beta + 1)} - \left(\frac{\alpha}{\alpha + \beta}\right)^2 \\
     &= \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}
-\end{align}
+\end{aligned}$$
 
-Before viewing mode, we should differentiate Beta distribution under specific condition. $(\alpha, \beta > 1)$.
-$$\frac{\partial}{\partial \mu}\text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \left((\alpha- 1) \mu^{\alpha - 2}(1 - \mu)^{\beta - 1} - (\beta - 1)\mu^{\alpha - 1}(1 - \mu)^{\beta - 2} \right)$$
+Before viewing mode, we should differentiate Beta distribution under specific condition. $\small(\alpha, \beta > 1)$.
+$$\small \frac{\partial}{\partial \mu}\text{Beta}(\mu | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \left((\alpha- 1) \mu^{\alpha - 2}(1 - \mu)^{\beta - 1} - (\beta - 1)\mu^{\alpha - 1}(1 - \mu)^{\beta - 2} \right)$$
 
 Thus, we can find value of $\mu$ directly.
-\begin{align}
+$$\small\begin{aligned}
     &(\alpha - 1)(1 - \mu) - (\beta - 1)\mu = 0 \\
     \Rightarrow ~ &\mu = \frac{\alpha - 1}{\alpha + \beta - 2}
-\end{align}
+\end{aligned}$$
+
+------------------------------------------------------------------------
+**Algorithm 5.1.8 - Acceptance Rejection Method**
+
+For given pdf $\small \varphi(x)$ which is defined on $\small \mathcal{D}$, let $\small t(x)$ be a function
+such that $\small t(x) \geq \varphi(x), ~\forall x \in \mathcal{D}$  with next property:
+$$\small T = \int_{\mathcal{D}} t(x) dx \geq  \int_{\mathcal{D}} \varphi(x) dx = 1$$
+Since $\displaystyle\small r(x) \equiv \frac{t(x)}{T}$ is density function, we generate $\small r(x)$ instead of $\small t(x)$ with following procedure:<br/>
+1. Generate $\small Y$ having density $\small r(x)$.<br/>
+2. Generate $\small U \sim \text{Unif}(0,1)$, independent of $\small Y$.<br/>
+3. If $\displaystyle \small U \leq \frac{\varphi(Y)}{t(Y)}$, then return $\small X=Y$; otherwise go back to step 1.
+------------------------------------------------------------------------
+
+**Proof for Algorithm 5.1.8**
+
+Through above 3 steps, we can generate the pair $\small (Y,U)$.
+To be accepted, a pair must satisfy $\displaystyle\small U \leq \frac{\varphi(Y)}{t(Y)}$.
+Thus, pdf of $\small X$ is equivalent to pdf of $\small(Y|U \leq \varphi(Y) / t(Y))$. Therefore,
+
+$$\small P(X\leq x) = P\left(Y\leq x \left\lvert U\leq  \frac{\varphi(Y)}{t(Y)}\right.\right) = \frac{P(Y\leq x, U\leq\varphi(Y)/t(Y))}{P(U\leq \varphi(Y)/t(Y))}$$
+
+And we can find what the RHS is.
+
+$$\small \begin{aligned}
+  P\left(Y\leq x, U\leq \frac{\varphi(Y)}{t(Y)}\right) &= \int_{-\infty}^{x} P\left( U \leq \frac{\varphi(y)}{t(y)}\right) r(y) dy = \int_{-\infty}^{x} \frac{\varphi(y)}{t(y)}r(y) dy \\
+  &= \frac{1}{T}\int_{-\infty}^x \varphi(y) dy = \frac{F(x)}{T}
+  \end{aligned}$$
+
+$$\small P\left(U \leq \frac{\varphi(Y)}{t(Y)} \right) = \int_{-\infty}^{\infty} \frac{\varphi(y)}{t(y)}r(y) dy = \frac{1}{T}$$
+
+Therefore the CDF of $\small X$ becomes $\small F(x)$ which is CDF corresponding to $\small \varphi(x)$.
+
+<br/>
+
+이제 증명도 마쳤으니 이 알고리즘을 구현해봅시다.
+
+```rust
+extern crate rand;
+extern crate peroxide;
+
+use rand::prelude::*                   // For RNG
+use peroxide::special::function::beta; // For Beta function
+
+fn main() {
+    // For Beta(x | 3, 2)
+    let a = 3f64;
+    let b = 2f64;
+    let n = 100usize; // For 100 samples
+    
+    // Two independent RNG
+    let mut rng1 = thread_rng();
+    let mut rng2 = thread_rng();
+    
+    let mut result = vec![0f64; n];
+    let mut iter_num = 0usize;
+
+    // To construct t(x) -> t(x) = T (constant function)
+    // T >= φ(x), ∀x ∈ D => T = mode
+    // r(x) = t(x)/T = 1  ~ Unif(0,1)
+    let mode_x = (a - 1f64) / (a + b - 2f64);
+    let mode = beta_pdf(mode_x); 
+
+    while iter_num < n {
+        // 1. Y ~ Unif(0, 1)
+        let u1 = rng1.gen_range(0f64, 1f64);
+
+        // 2. U ~ Unif(0, 1)
+        let u2 = rng2.gen_range(0f64, 1f64);
+
+        // 3. U <= varphi(Y) / t(Y) 
+        if u2 <= beta_pdf(u1) / c {
+            v[iter_num] = u1;
+            iter_num += 1;
+        }
+    }
+    println!("{:?}", v);
+}
+
+fn beta_pdf(x: f64, a: f64, b: f64) -> f64 {
+    1f64 / beta(a, b)
+        * x.powf(a - 1f64)
+        * (1f64 - x).powf(b - 1f64)
+}
+```
+
+다음은 `Peroxide` 라이브러리에서의 위와 동일한 코드 사용법 입니다.
+(내부 구현도 동일합니다.)
+
+```rust
+extern crate peroxide;
+use peroxide::*;
+
+fn main() {
+    let beta = Beta(3, 2);
+    beta.sample(100).print();
+}
+```
+
